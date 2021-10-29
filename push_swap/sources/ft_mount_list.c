@@ -10,20 +10,18 @@ t_stack *ft_lstlast(t_stack *lst)
 	return(lst);
 }
 
-void ft_lstadd_back(t_stack **lst, t_stack *new)
+void ft_lstadd_back(t_stack *lst, t_stack *new)
 {
-	if(lst)
+	if (lst->index == 0)
 	{
-		if (!*(lst))
-		{
-			*lst = new;
-			return ;
-		}
-		else
-		{
-			(ft_lstlast(*lst))->next = new; 
-		}
-	}	
+		lst->content = new->content;
+		lst->index++;
+		return ;
+	}
+	else
+	{
+		(ft_lstlast(lst))->next = new;
+	}
 }
 
 t_stack *ft_lstnew(int content)
@@ -42,21 +40,24 @@ size_t ft_mount_list(int argc, char const **argv, t_stack *a)
 	char	**ls;
 	int		i;
 	size_t	j;
+	size_t	k;
 
 	i = 1;
 	j = 0;
-	ls = NULL;
 	while (i < argc)
 	{
-		ls = ft_split(argv[i], ' ');
-		while(ls[j])
+		argv = argv + 1;
+		ls = ft_split((char *)*argv, ' ');
+		k = 0;
+		while(ls[k])
 		{
-			ft_lstadd_back(&a, ft_lstnew(ft_atoi(ls[j])));
+			ft_lstadd_back(a, ft_lstnew(ft_atoi(ls[k++])));
 			j++;
 		}
-	i++;
+		free(ls);
+		i++;
 	}
-	return(j);
+	return (j);
 }
 
 void ft_print_list(t_stack *a)

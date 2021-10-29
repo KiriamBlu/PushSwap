@@ -49,7 +49,7 @@ static void	storagewords(char **str, char **auxi, char c, int getword)
 	}
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**aux;
 	char	*str;
@@ -75,19 +75,3 @@ char	**ft_split(char const *s, char c)
 	return (aux);
 }
 
-/*int main(int argc, char const *argv[])
-{
-	char l[36] = "..hola..joan.l.pedro.... ..loco.";
-	char **j;
-	int i;
-
-	i = 0;
-	printf("%s\n", l);
-	j = ft_split(l,'.');
-	while(i < getnumword(l, '.'))
-	{
-		printf("Palabra[%d] = %s\n",i, j[i]);
-		i++;
-	}
-	return 0;
-}*/
