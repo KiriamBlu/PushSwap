@@ -1,46 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/29 12:33:12 by jsanfeli          #+#    #+#             */
+/*   Updated: 2021/10/29 14:51:05 by jsanfeli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ps_header.h"
 
-int	ft_get_no_dup(int argc, char const **argv, char *aux)
+int	ft_get_no_dup(char const **ls, char *aux)
 {
 	size_t count;
+	char	**tmp;
 
+	tmp = (char **)ls;
 	count = 0;
-	while (count < argc)
+	while (tmp)
 	{
-		if(ft_strcmp(*argv[count], aux) == -1)
+		if(ft_strcmp((const char *)*tmp, (const char *)aux) == -1)
 			return(-1);
-		count++;
+		*tmp = *tmp + 1;
 	}
 	return(1);
 }
-int	ft_not_short(int argc, char	const **argv)
+int	ft_not_short(t_stack *a)
 {
-	size_t count;
-
-	count = 0;
-	while(count < argc - 1)
+	while(a->content < a->next->content)
 	{
-		// AÑADIR AQUI LA COMPARACIÖN PARA ENCONTRAR EL MAYOR Y MENOR
-		if (*argv[count] < *argv[count + 1])
-			return(-1)
-		count++;
+		if (a->content > a->next->content)
+			return(1) ;
 	}
-	return(1);	
+	return(-1);	
 }
 
-int	ft_error(int argc, char const **argv)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char *aux;
+	int	cont;
 
-	if (ft_not_short(argc, argv) == -1)
-		return(-1)
-	while (argc-- > 1)
+	cont = 0;
+	while (s1[cont] == s2[cont])
 	{
-		aux = ft_strdup(*argv[argc]);
-		if (ft_get_no_dup(argc, argv, aux) == -1)
-		{
-			free(aux);
-			return (-1);
-		}
+		if (s1[cont] != s2[0])
+			return(1);
+		cont++;
 	}
+	return (-1);
 }

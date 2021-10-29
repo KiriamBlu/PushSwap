@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_mount_list.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
+/*   Updated: 2021/10/29 14:47:12 by jsanfeli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ps_header.h"
 
 
@@ -44,18 +56,23 @@ size_t ft_mount_list(int argc, char const **argv, t_stack *a)
 
 	i = 1;
 	j = 0;
-	while (i < argc)
+	while (i++ < argc)
 	{
 		argv = argv + 1;
 		ls = ft_split((char *)*argv, ' ');
 		k = 0;
 		while(ls[k])
 		{
+			if (ft_get_no_dup((const char **)ls, ls[k]) == -1)
+			{
+				free(ls);
+				ft_free_list(a);
+				ft_error_message();
+			}
 			ft_lstadd_back(a, ft_lstnew(ft_atoi(ls[k++])));
 			j++;
 		}
 		free(ls);
-		i++;
 	}
 	return (j);
 }

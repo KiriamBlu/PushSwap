@@ -2,7 +2,8 @@ NAME := push_swap
 LIBFT_NAME = libft.a
 
 SRCS =  ./sources/push_swap.c \
-		./sources/ft_mount_list.c
+		./sources/ft_mount_list.c \
+		./sources/ft_error.c
 
 OBJS = ${SRCS:.c=.o}
 

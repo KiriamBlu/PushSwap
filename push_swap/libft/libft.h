@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 12:07:38 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/09/23 09:44:50 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/10/29 14:35:35 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *str, int c);
-int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlen(const char *c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
