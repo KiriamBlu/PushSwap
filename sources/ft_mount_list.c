@@ -6,15 +6,40 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/02 16:17:13 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:44:34 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps_header.h"
 
+/*static size_t	ft_split_len(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}*/
+
+void	free_table(char **table)
+{
+	int	pos;
+
+	pos = 0;
+	while (table[pos])
+	{
+		free(table[pos]);
+		pos++;
+	}
+	free(table);
+	table = NULL;
+}
+
 void ft_mount_list(int argc, char const **argv, t_stack *stack)
 {
 	char	**ls;
+	int		pos;
 	int		i;
 	size_t	j;
 
@@ -28,21 +53,14 @@ void ft_mount_list(int argc, char const **argv, t_stack *stack)
 	}
 	while (i++ < argc)
 	{
-		printf("esto es argv:%s_________y esta es su direccion:%p\n ", *argv, *argv);
 		argv = argv + 1;
 		ls = ft_split((char *)*argv, ' ');
-		while(*ls)
-		{
-			stack->a[j]  = ft_atoi(*ls);
-			free(*ls);
-			ls++;
-			j++;
-		}
+		pos = 0;
+		while(ls[pos])
+			stack->a[j++]  = ft_atoi(ls[pos++]);
+		free_table(ls);
 	}
-	system("leaks push_swap");
 	stack->index_a = j;
-	if (ft_get_no_dup(stack) == -1)
-		ft_error_message();
 	return ;
 }
 
