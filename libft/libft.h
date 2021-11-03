@@ -6,13 +6,14 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 12:07:38 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/02 16:13:46 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/03 17:00:54 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include"../header/ps_header.h"
 # include<stdio.h>
 # include<unistd.h>
 # include<stdlib.h>

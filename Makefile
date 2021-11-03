@@ -3,7 +3,9 @@ LIBFT_NAME = libft.a
 
 SRCS =  ./sources/push_swap.c \
 		./sources/ft_mount_list.c \
-		./sources/ft_error.c
+		./sources/ft_error.c \
+		./sources/ft_error_two.c \
+		./sources/ft_printing_shit.c
 
 OBJS = ${SRCS:.c=.o}
 

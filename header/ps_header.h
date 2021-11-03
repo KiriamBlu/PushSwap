@@ -27,9 +27,12 @@ int		ft_get_no_dup(t_stack *a);
 void	ft_args_managment(int argc, char const **argv, t_stack *a);
 void	ft_mount_list(int argc, char const **argv, t_stack *a);
 void	ft_print_list(t_stack *a);
-void	ft_free_list(t_stack stack);
-void	ft_error_message(void);
+void	ft_free_list(t_stack *stack);
+void	ft_error_message(t_stack *stack);
 int		ft_strcmp(char *s1, char *s2);
-
+int		ft_isnum(int c);
+int 	ft_get_nothing_else_num(int argc ,char const **argv);
+int 	ft_check_sign(int argc, const char **str);
+int		ft_atoi_special(const char *str, char **ls, t_stack *stack);
 
 #endif

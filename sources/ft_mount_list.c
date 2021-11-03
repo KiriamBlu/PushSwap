@@ -6,21 +6,11 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/02 17:44:34 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/03 17:03:59 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps_header.h"
-
-/*static size_t	ft_split_len(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}*/
 
 void	free_table(char **table)
 {
@@ -46,10 +36,10 @@ void ft_mount_list(int argc, char const **argv, t_stack *stack)
 	i = 1;
 	j = 0;
 	stack->a = malloc(sizeof(t_stack));
-	if (!stack->a)
+	stack->b = malloc(sizeof(t_stack));
+	if(!stack->a || !stack->b || ft_check_sign(argc, argv) == -1)
 	{
-		free(stack->a);
-		exit(0);
+		ft_error_message(stack);
 	}
 	while (i++ < argc)
 	{
@@ -57,21 +47,42 @@ void ft_mount_list(int argc, char const **argv, t_stack *stack)
 		ls = ft_split((char *)*argv, ' ');
 		pos = 0;
 		while(ls[pos])
-			stack->a[j++]  = ft_atoi(ls[pos++]);
+			stack->a[j++]  = ft_atoi_special(ls[pos++], ls, stack);
 		free_table(ls);
 	}
 	stack->index_a = j;
 	return ;
 }
 
-void ft_print_list(t_stack *stack)
+int	ft_atoi_special(const char *str, char **ls, t_stack *stack)
 {
-	size_t aux;
+	int				i;
+	int				sign;
+	unsigned long	nb;
 
-	aux = 0;
-	while(aux < stack->index_a)
-		printf("[%d]\n", stack->a[aux++]);
+	i = 0;
+	nb = 0;
+	sign = 0;
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' \
+			|| str[i] == '\f' || str[i] == '\v' || str[i] == '\r')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i++] == '-')
+			sign++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+		nb = (nb * 10) + (str[i++] - '0');	
+	if ((nb > 2147483647 && sign == 0) || (nb > 2147483648 && sign >= 1))
+	{
+		free(ls);
+		ft_error_message(stack);
+	}
+	else if (sign != 0)
+		return ((int)nb * -1);
+	return ((int) nb);
 }
+
 
 
 
