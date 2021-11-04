@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/03 16:55:39 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/04 18:33:17 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ int main(int argc, char const **argv)
 	t_stack		stack;
 
 	ft_args_managment(argc, argv, &stack);
+	push_b(&stack);
+	push_b(&stack);
+	push_b(&stack);
+	push_b(&stack);
+	push_a(&stack);
+	push_a(&stack);
+	push_a(&stack); 
+	push_a(&stack); //SEGFAULT AQUI, JOAN DEL FUTURO NO SE QUEDA LA LISTA VACIA
 	ft_print_list(&stack);
 	ft_free_list(&stack);
 	return 0;

@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:02:56 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/03 17:03:15 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/04 16:11:31 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void ft_print_list(t_stack *stack)
 	printf("*************************\n");
 	printf("\n-------------------------\n \n");
 	printf("*************----LISTA B\n");
-	while(aux < stack->index_b)
+	aux = 0;
+	while(aux <= stack->index_b)
 	{
 		printf("*Posición: %zu ----[%d]\n", aux ,stack->b[aux]);
 		aux++;

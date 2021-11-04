@@ -18,7 +18,6 @@ typedef struct s_stack
 	struct s_stack *next;
 } t_stack;
 
-
 /*--------------------------NUMERIC CONTROL--------------------------------------*/
 
 int		ft_error(int argc, char const **argv);
@@ -34,5 +33,10 @@ int		ft_isnum(int c);
 int 	ft_get_nothing_else_num(int argc ,char const **argv);
 int 	ft_check_sign(int argc, const char **str);
 int		ft_atoi_special(const char *str, char **ls, t_stack *stack);
+
+/*----------------------------Movements------------------------------------------*/
+
+void push_b(t_stack *stack);
+void push_a(t_stack *stack);
 
 #endif
