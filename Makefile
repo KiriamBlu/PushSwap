@@ -6,7 +6,10 @@ SRCS =  ./sources/push_swap.c \
 		./sources/ft_error.c \
 		./sources/ft_error_two.c \
 		./sources/ft_printing_shit.c \
-		./sources/ft_push.c
+		./sources/ft_push.c \
+		./sources/ft_swap.c \
+		./sources/ft_rotate.c \
+		./sources/ft_revrotate.c
 
 OBJS = ${SRCS:.c=.o}
 

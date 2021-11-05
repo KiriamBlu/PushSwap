@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:33:12 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/03 15:54:53 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/05 11:39:35 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ int	ft_get_no_dup(t_stack *stack)
 int	ft_not_short(t_stack *stack)
 {
 	size_t tmp;
+	size_t aux;
 
 	tmp	= 0;
-	while(tmp < stack->index_a)
+	aux = stack->index_a;
+	aux = aux - 1;
+	while(tmp < aux)
 	{
 		if (stack->a[tmp] > stack->a[tmp + 1])
 			return(1) ;

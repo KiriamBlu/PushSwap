@@ -38,5 +38,10 @@ int		ft_atoi_special(const char *str, char **ls, t_stack *stack);
 
 void push_b(t_stack *stack);
 void push_a(t_stack *stack);
+void swap(t_stack *stack, int c);
+void rotate(t_stack *stack, int c);
+void rrotate(t_stack *stack);
+void revrotate(t_stack *stack, int c);
+void rrevrotate(t_stack *stack);
 
 #endif
