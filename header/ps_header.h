@@ -13,6 +13,7 @@ typedef struct s_stack
 {
 	int *a;
 	int *b;
+	int high;
 	size_t index_a;
 	size_t index_b;
 	struct s_stack *next;
@@ -30,6 +31,7 @@ void	ft_free_list(t_stack *stack);
 void	ft_error_message(t_stack *stack);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isnum(int c);
+void	ft_get_numhigh(t_stack *stack);
 int 	ft_get_nothing_else_num(int argc ,char const **argv);
 int 	ft_check_sign(int argc, const char **str);
 int		ft_atoi_special(const char *str, char **ls, t_stack *stack);
@@ -43,5 +45,13 @@ void rotate(t_stack *stack, int c);
 void rrotate(t_stack *stack);
 void revrotate(t_stack *stack, int c);
 void rrevrotate(t_stack *stack);
+
+/*---------------------------Algorithms-----------------------------------------*/
+
+void ft_shorting(t_stack *stack);
+void smallshort(t_stack *stack);
+void twoshort(t_stack *stack, int c);
+void threeshort(t_stack *stack, int c);
+
 
 #endif

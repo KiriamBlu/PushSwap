@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/05 11:39:32 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/05 12:07:46 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,33 @@ int	ft_atoi_special(const char *str, char **ls, t_stack *stack)
 	return ((int) nb);
 }
 
+void	ft_get_numhigh(t_stack *stack)
+{
+	t_stack *aux;
+	size_t check;
+	size_t count;
+	size_t tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_a)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while(tmp < stack->index_a)
+		{
+			if (stack->a[count] >= aux->a[tmp])
+				check++;
+			if(check == stack->index_a)
+				stack->high = stack->a[count];
+			tmp++;
+		}
+		count++;
+	}
+	return ;
+}
 
 
 
