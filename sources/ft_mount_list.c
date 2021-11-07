@@ -111,6 +111,34 @@ void	ft_get_numhigh(t_stack *stack)
 	return ;
 }
 
+void	ft_get_numlow(t_stack *stack)
+{
+	t_stack *aux;
+	size_t check;
+	size_t count;
+	size_t tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_a)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while(tmp < stack->index_a)
+		{
+			if (stack->a[count] <= aux->a[tmp])
+				check++;
+			if(check == stack->index_a)
+				stack->low = stack->a[count];
+			tmp++;
+		}
+		count++;
+	}
+	return ;
+}
+
 
 
 

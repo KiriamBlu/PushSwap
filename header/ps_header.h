@@ -14,6 +14,7 @@ typedef struct s_stack
 	int *a;
 	int *b;
 	int high;
+	int low;
 	size_t index_a;
 	size_t index_b;
 	struct s_stack *next;
@@ -32,6 +33,7 @@ void	ft_error_message(t_stack *stack);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isnum(int c);
 void	ft_get_numhigh(t_stack *stack);
+void	ft_get_numlow(t_stack *stack);
 int 	ft_get_nothing_else_num(int argc ,char const **argv);
 int 	ft_check_sign(int argc, const char **str);
 int		ft_atoi_special(const char *str, char **ls, t_stack *stack);
@@ -51,7 +53,13 @@ void rrevrotate(t_stack *stack);
 void ft_shorting(t_stack *stack);
 void smallshort(t_stack *stack);
 void twoshort(t_stack *stack, int c);
-void threeshort(t_stack *stack, int c);
+void threeshort_a(t_stack *stack);
+void threeshort_b(t_stack *stack);
+void aftershort(t_stack *stack);
+int find_best(int *a, int c, size_t l);
+void fourshort(t_stack *stack);
+void fiveshort(t_stack *stack);
+void sixshort(t_stack *stack);
 
 
 #endif

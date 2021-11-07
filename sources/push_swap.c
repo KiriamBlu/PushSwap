@@ -28,6 +28,7 @@ void ft_args_managment(int argc, char const **argv, t_stack *stack)
 		exit (0);
 	ft_mount_list(argc, argv, stack);
 	ft_get_numhigh(stack);
+	ft_get_numlow(stack);
 	if (ft_get_nothing_else_num(argc, argv) == -1)
 		ft_error_message(stack);
 	if (ft_get_no_dup(stack) == -1)

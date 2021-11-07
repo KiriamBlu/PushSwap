@@ -20,10 +20,19 @@ void ft_shorting(t_stack *stack)
 
 void smallshort(t_stack *stack)
 {
+	int i;
+
+	i = 0;
 	if(stack->index_a == 2)
 		twoshort(stack, 'a');
 	if(stack->index_a == 3)
-		threeshort(stack, 'a');
+		threeshort_a(stack);
+	if(stack->index_a == 4)
+		fourshort(stack);
+	if(stack->index_a == 5)
+		fiveshort(stack);
+	if(stack->index_a == 6)
+		sixshort(stack);
 }
 
 void twoshort(t_stack *stack, int c)
@@ -36,51 +45,64 @@ void twoshort(t_stack *stack, int c)
 			swap(stack, 'b');
 }
 
-void threeshort(t_stack *stack, int c)
+void threeshort_a(t_stack *stack)
+{
+	if(stack->a[0] > stack->a[1] && stack->a[1]  > stack->a[2])
+	{
+		swap(stack, 'a');
+		revrotate(stack, 'a');
+	}
+	else if(stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] 
+		&& stack->a[0] < stack->a[2])
+		swap(stack, 'a');
+	else if(stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] 
+		&& stack->a[0] > stack->a[2])
+		rotate(stack, 'a');
+	else if(stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] 
+		&& stack->a[0] > stack->a[2])
+		revrotate(stack, 'a');
+	else if(stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] 
+		&& stack->a[0] < stack->a[2])
+	{
+		revrotate(stack,'a');
+		swap(stack, 'a');
+	}
+}
+
+void threeshort_b(t_stack *stack)
+{	
+	if(stack->b[0] > stack->b[1] && stack->b[1] < stack->b[2] 
+		&& stack->b[0] < stack->b[2])
+		revrotate(stack, 'b');
+	else if(stack->b[0] > stack->b[1] && stack->b[1] < stack->b[2] 
+		&& stack->b[0] > stack->b[2])
+	{
+		revrotate(stack, 'b');
+		swap(stack, 'b');
+	}
+	else if(stack->b[0] < stack->b[1] && stack->b[1] > stack->b[2] 
+		&& stack->b[0] > stack->b[2])
+		swap(stack, 'b');
+	else if(stack->b[0] < stack->b[1] && stack->b[1] > stack->b[2] 
+		&& stack->b[0] < stack->b[2])
+	rotate(stack, 'b');
+}
+
+int find_best(int *a, int c, size_t l)
 {
 	int i;
-
+	unsigned long j;
+	
 	i = 0;
-	if(c == 'a')
-	{
-		if(stack->a[0] > stack->a[1] && stack->a[1]  > stack->a[2])
-		{
-			swap(stack, 'a');
-			revrotate(stack, 'a');
-		}
-		else if(stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] 
-			&& stack->a[0] < stack->a[2])
-			swap(stack, 'a');
-		else if(stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] 
-			&& stack->a[0] > stack->a[2])
-			rotate(stack, 'a');
-		else if(stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] 
-			&& stack->a[0] > stack->a[2])
-			revrotate(stack, 'a');
-		else if(stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] 
-			&& stack->a[0] < stack->a[2])
-		{
-			revrotate(stack,'a');
-			swap(stack, 'a');
-		}
+	j = 0;
+	while(a[j] != c)
+		j++;
+	if (j >= (l / 2))
+		return(-1);
+	else
+		return(1);
+}
 
 
-	}		
-	if(c == 'b')
-	{
-		if(stack->b[0] < stack->b[1] && stack->b[1] < stack->b[2])
-		{
-			swap(stack, 'b');
-			revrotate(stack, 'b');
-		}
-		else if(stack->b[0] > stack->b[1] && stack->b[1] < stack->b[2] 
-			&& stack->b[0] < stack->b[2])
-			revrotate(stack, 'b');
-		else if(stack->b[0] > stack->b[1] && stack->b[1] < stack->b[2] 
-			&& stack->b[0] > stack->b[2])
-			{
-				revrotate(stack, 'b');
-				swap(stack, 'b');
-			}
-	}
-}	
+
+
