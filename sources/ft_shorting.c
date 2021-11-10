@@ -6,16 +6,21 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:45:49 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/05 16:40:48 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:27:51 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps_header.h"
 
-void ft_shorting(t_stack *stack)
+void ft_shorting(t_stack *stack, t_ch *chunk)
 {
-	if (stack->index_a >= 2 && stack->index_a <= 10)
+	getdonechunk(stack, chunk, stack->index_a);
+	printf("ALGO PASA: %d\n", chunk->pivot);
+	if (stack->index_a >= 2 && stack->index_a <= 6)
 		smallshort(stack);
+	/*else
+		longshort(stack, chunk);*/
+	return ;
 }
 
 void smallshort(t_stack *stack)

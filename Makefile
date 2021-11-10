@@ -11,7 +11,8 @@ SRCS =  ./sources/push_swap.c \
 		./sources/ft_rotate.c \
 		./sources/ft_revrotate.c \
 		./sources/ft_shorting.c \
-		./sources/ft_shorting2.c
+		./sources/ft_shorting2.c \
+		./sources/ft_shorting3.c
 
 OBJS = ${SRCS:.c=.o}
 

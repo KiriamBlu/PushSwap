@@ -6,55 +6,69 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/05 12:07:46 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/10 12:00:51 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps_header.h"
 
-void	free_table(char **table)
+void	free_table(char ***table)
 {
 	int	pos;
+	int i;
 
 	pos = 0;
-	while (table[pos])
+	i = 0;
+	while(table[i])
 	{
-		free(table[pos]);
-		pos++;
+		pos = 0;
+		while (table[i][pos])
+		{
+			free(table[i][pos]);
+			pos++;
+		}
+		i++;
+	}
+	i = 0;
+	while(table[i])
+	{
+		free(table[i]);
+		table[i] = NULL;
+		i++;
 	}
 	free(table);
 	table = NULL;
 }
 
-void ft_mount_list(int argc, char const **argv, t_stack *stack)
+static size_t ft_lsnum(char ***ls)
 {
-	char	**ls;
-	int		pos;
-	int		i;
-	size_t	j;
+	size_t i;
+	size_t j;
+	size_t count;
 
-	i = 1;
+	i = 0;
 	j = 0;
-	stack->a = malloc(sizeof(t_stack));
-	stack->b = malloc(sizeof(t_stack));
-	if(!stack->a || !stack->b || ft_check_sign(argc, argv) == -1)
+	count = 0;
+	while(ls[i])
 	{
-		ft_error_message(stack);
+		j = 0;
+		while(ls[i][j])
+		{
+			count++;
+			j++;
+		}
+		i++;
 	}
-	while (i++ < argc)
-	{
-		argv = argv + 1;
-		ls = ft_split((char *)*argv, ' ');
-		pos = 0;
-		while(ls[pos])
-			stack->a[j++]  = ft_atoi_special(ls[pos++], ls, stack);
-		free_table(ls);
-	}
-	stack->index_a = j;
-	return ;
+	return(count);
+}
+static void atoierror(char ***ls)
+{
+	free_table(ls);
+	write(1, "Error\n", 6);
+	exit(0);
 }
 
-int	ft_atoi_special(const char *str, char **ls, t_stack *stack)
+int	ft_atoi_special(const char *str, char ***ls)
 {
 	int				i;
 	int				sign;
@@ -74,72 +88,40 @@ int	ft_atoi_special(const char *str, char **ls, t_stack *stack)
 	while (str[i] >= '0' && str[i] <= '9')
 		nb = (nb * 10) + (str[i++] - '0');	
 	if ((nb > 2147483647 && sign == 0) || (nb > 2147483648 && sign >= 1))
-	{
-		free(ls);
-		ft_error_message(stack);
-	}
+		atoierror(ls);
 	else if (sign != 0)
 		return ((int)nb * -1);
 	return ((int) nb);
 }
 
-void	ft_get_numhigh(t_stack *stack)
+void ft_mount_list(int argc, char const **argv, t_stack *stack) //REDUCIR UNA LINEA EL CODIGO
 {
-	t_stack *aux;
-	size_t check;
-	size_t count;
-	size_t tmp;
+	char	***ls;
+	int		pos;
+	int		i;
+	int		j;
 
-	count = 0;
-	aux = NULL;
-	aux = stack;
-	while (count < stack->index_a)
+	i = -1;
+	pos = 0;
+	j = argc - 1;
+	ls = malloc(sizeof(char **) * argc);
+	while (i++ < j)
 	{
-		tmp = 0;
-		aux = stack;
-		check = 0;
-		while(tmp < stack->index_a)
-		{
-			if (stack->a[count] >= aux->a[tmp])
-				check++;
-			if(check == stack->index_a)
-				stack->high = stack->a[count];
-			tmp++;
-		}
-		count++;
+		argv = argv + 1;
+		ls[i] = ft_split((char *)*argv, ' ');
 	}
+	stack->a = malloc(sizeof(int) * ft_lsnum(ls));
+	stack->b = malloc(sizeof(int) * ft_lsnum(ls));
+	stack->index_a = ft_lsnum(ls);
+	j = 0;
+	while(ls[pos])
+	{
+		i = 0;
+		while(ls[pos][i])
+			stack->a[j++]  = ft_atoi_special(ls[pos][i++], ls);
+		pos++;
+	}
+	free_table(ls);
 	return ;
 }
-
-void	ft_get_numlow(t_stack *stack)
-{
-	t_stack *aux;
-	size_t check;
-	size_t count;
-	size_t tmp;
-
-	count = 0;
-	aux = NULL;
-	aux = stack;
-	while (count < stack->index_a)
-	{
-		tmp = 0;
-		aux = stack;
-		check = 0;
-		while(tmp < stack->index_a)
-		{
-			if (stack->a[count] <= aux->a[tmp])
-				check++;
-			if(check == stack->index_a)
-				stack->low = stack->a[count];
-			tmp++;
-		}
-		count++;
-	}
-	return ;
-}
-
-
-
-
 
