@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:27:24 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/10 12:37:24 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:51:17 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void getpositionpivot(size_t chunksize, t_ch *chunk)
 		chunk->pivot = chunk->ch[chunksize / 2 - 1];
 	else
 		chunk->pivot = chunk->ch[(chunksize / 2)];
+	chunk->index_ch = chunksize;
 }
 
 void getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize)
@@ -50,19 +51,20 @@ void getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize)
 
 	i = 0;
 	u = 0;
+	if(chunk->index_ch != 0)
+		free(chunk->ch);
 	chunk->ch = malloc(sizeof(int) * chunksize);
 	ft_strdup_struct(stack->a, &aux, chunksize);
 	while (i < chunksize)
 	{
 		ft_get_numlow(&aux);
 		chunk->ch[i] = aux.low;
-		chunk->index_ch++;
 		u = findpositionlow(&aux);
 		while(u < aux.index_a && aux.a[u + 1])
-			{
-				aux.a[u] = aux.a[u + 1];
-				u++;
-			}
+		{
+			aux.a[u] = aux.a[u + 1];
+			u++;
+		}
 		aux.index_a--;
 		i++;
 	}
@@ -96,6 +98,21 @@ void	ft_get_numlow(t_stack *stack)
 		count++;
 	}
 	return ;
+}
+
+int find_best(int *a, int c, size_t l)
+{
+	int i;
+	unsigned long j;
+	
+	i = 0;
+	j = 0;
+	while(a[j] != c)
+		j++;
+	if (j >= (l / 2))
+		return(-1);
+	else
+		return(1);
 }
 
 

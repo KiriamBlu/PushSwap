@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 10:26:19 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/05 11:36:46 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:42:00 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,4 @@ void rrotate(t_stack *stack)
 		stack->b[aux - 1] = i;
 	}
 }
+

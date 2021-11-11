@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:25:01 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/09 09:27:48 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:53:39 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,25 @@ void fiveshort(t_stack *stack)
 	aftershort(stack);
 }
 
-void sixshort(t_stack *stack)
+void sixshort(t_stack *stack, t_ch *chunk)
 {
 	int i;
 
 	i = 0;
-	while(i < 3)
+	getdonechunk(stack, chunk, stack->index_a);
+	while(stack->index_a > 3)
 	{	
-		if(find_best(stack->a, stack->low, stack->index_a) == 1)
-			while(stack->a[0] != stack->low)
+		if(find_bestforpivot(stack->a, chunk->pivot, stack->index_a) == -1)
+			while(stack->a[0] > chunk->pivot)
 				rotate(stack, 'a');
 		else
-			while(stack->a[0] != stack->low)
+			while(stack->a[0] > chunk->pivot)
 				revrotate(stack, 'a');
 		push_b(stack);
-		ft_get_numlow(stack);
 		i++;
 	}
-	threeshort_b(stack);
 	threeshort_a(stack);
+	threeshort_b(stack);
 	ft_print_list(stack);
 	stack->index_b += i;
 	aftershort(stack);

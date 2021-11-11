@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/10 10:48:22 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:48:13 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int main(int argc, char const **argv)
 	t_stack		stack;
 	t_ch		chunk;
 
+	chunk.index_ch = 0;
 	ft_args_managment(argc, argv, &stack);
 	printf("START\n");
 	ft_print_list(&stack);
