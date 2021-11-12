@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/11 13:46:56 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/12 09:01:16 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_atoi_special(const char *str, char ***ls)
 	return ((int) nb);
 }
 
-void ft_mount_list(int argc, char const **argv, t_stack *stack) //REDUCIR UNA LINEA EL CODIGO
+void ft_mount_list(int argc, char const **argv, t_stack *stack)
 {
 	char	***ls;
 	int		pos;
