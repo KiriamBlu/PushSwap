@@ -37,11 +37,13 @@ void	ft_free_list(t_stack *stack);
 void	ft_error_message(t_stack *stack);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isnum(int c);
-void	ft_get_numlow(t_stack *stack);
+int		ft_get_numlow(int *a, size_t l);
+int		ft_get_numhigh(int *a, size_t l);
 void	getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize);
 int 	ft_get_nothing_else_num(int argc ,char const **argv);
 int 	ft_check_sign(int argc, const char **str);
 int		ft_atoi_special(const char *str, char ***ls);
+int		decidemiddle(unsigned long j, unsigned long u, int type);
 
 /*----------------------------Movements------------------------------------------*/
 
@@ -65,7 +67,10 @@ int		find_best(int *a, int c, size_t l);
 void	fourshort(t_stack *stack);
 void	fiveshort(t_stack *stack);
 void	sixshort(t_stack *stack, t_ch *chunk);
-int		find_bestforpivot(int *a, int c, size_t l);
+int		find_bestforpivot(int *a, int c);
+void	longshort(t_stack *stack);
+void	preparelong(t_stack *stack, t_ch *chunk);
+void	prepareforjump(t_stack *stack);
 
 
 #endif
