@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/11 10:48:13 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/12 16:50:34 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,26 @@ void	ft_free_list(t_stack *stack)
 int main(int argc, char const **argv)
 {
 	t_stack		stack;
-	t_ch		chunk;
+	//t_ch		chunk;
 
-	chunk.index_ch = 0;
 	ft_args_managment(argc, argv, &stack);
 	printf("START\n");
 	ft_print_list(&stack);
-	ft_shorting(&stack, &chunk);
+	push_b(&stack);
+	push_b(&stack);
+	push_b(&stack);
+	threeshort_b(&stack);
+	stack.low = stack.b[0];
+	stack.max = stack.b[2];
+	while(stack.index_a != 0)
+	{
+		ft_algowheel(&stack);
+		printf("---------------------\n\n");
+	}
+	//ft_shorting(&stack, &chunk);
 	ft_print_list(&stack);
 	ft_free_list(&stack);
-	free(chunk.ch);
+	//free(chunk.ch);
 	system("leaks push_swap");
 	return 0;
 }

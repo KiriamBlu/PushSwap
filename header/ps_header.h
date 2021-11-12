@@ -14,6 +14,7 @@ typedef struct s_stack
 	int *a;
 	int *b;
 	int low;
+	int max;
 	size_t index_a;
 	size_t index_b;
 } t_stack;
@@ -56,7 +57,7 @@ void rrevrotate(t_stack *stack);
 /*---------------------------Algorithms-----------------------------------------*/
 
 void	ft_shorting(t_stack *stack, t_ch *chunk);
-void	smallshort(t_stack *stack, t_ch *chunk);
+void	smallshort(t_stack *stack);
 void	twoshort(t_stack *stack, int c);
 void	threeshort_a(t_stack *stack);
 void	threeshort_b(t_stack *stack);
@@ -64,8 +65,8 @@ void	aftershort(t_stack *stack);
 int		find_best(int *a, int c, size_t l);
 void	fourshort(t_stack *stack);
 void	fiveshort(t_stack *stack);
-void	sixshort(t_stack *stack, t_ch *chunk);
-int		find_bestforpivot(int *a, int c, size_t l);
+void	sixshort(t_stack *stack);
+void	ft_algowheel(t_stack *stack);
 
 
 #endif

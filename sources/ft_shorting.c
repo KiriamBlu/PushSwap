@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:45:49 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/11 10:41:42 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/12 16:49:52 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 void ft_shorting(t_stack *stack, t_ch *chunk)
 {
 	getdonechunk(stack, chunk, stack->index_a);
-	if (stack->index_a >= 2 && stack->index_a <= 6)
-		smallshort(stack, chunk);
-	/*else
-		longshort(stack, chunk);*/
+	if (stack->index_a >= 2 && stack->index_a <= 10)
+		smallshort(stack);
 	return ;
 }
 
-void smallshort(t_stack *stack, t_ch *chunk)
+void smallshort(t_stack *stack)
 {
 	int i;
 
@@ -36,7 +34,7 @@ void smallshort(t_stack *stack, t_ch *chunk)
 	if(stack->index_a == 5)
 		fiveshort(stack);
 	if(stack->index_a == 6)
-		sixshort(stack, chunk);
+		sixshort(stack);
 }
 
 void twoshort(t_stack *stack, int c)
@@ -92,6 +90,20 @@ void threeshort_b(t_stack *stack)
 	rotate(stack, 'b');
 }
 
+int find_best(int *a, int c, size_t l)
+{
+	int i;
+	unsigned long j;
+	
+	i = 0;
+	j = 0;
+	while(a[j] != c)
+		j++;
+	if (j >= (l / 2))
+		return(-1);
+	else
+		return(1);
+}
 
 
 

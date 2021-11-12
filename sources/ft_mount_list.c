@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/11 13:46:56 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/12 16:49:49 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,6 @@ static size_t ft_lsnum(char ***ls)
 	}
 	return(count);
 }
-static void atoierror(char ***ls)
-{
-	free_table(ls);
-	write(1, "Error\n", 6);
-	exit(0);
-}
 
 int	ft_atoi_special(const char *str, char ***ls)
 {
@@ -88,7 +82,11 @@ int	ft_atoi_special(const char *str, char ***ls)
 	while (str[i] >= '0' && str[i] <= '9')
 		nb = (nb * 10) + (str[i++] - '0');	
 	if ((nb > 2147483647 && sign == 0) || (nb > 2147483648 && sign >= 1))
-		atoierror(ls);
+	{
+		free_table(ls);
+		write(1, "Error\n", 6);
+		exit (0);
+	}
 	else if (sign != 0)
 		return ((int)nb * -1);
 	return ((int) nb);
