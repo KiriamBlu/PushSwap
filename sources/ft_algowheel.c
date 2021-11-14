@@ -12,61 +12,53 @@
 
 #include "ps_header.h"
 
-/*static void ft_minmax(t_stack *stack)
+static void ft_minmax(t_stack *stack)
 {	
 	size_t i;
 
 	i = 0;
 	while(stack->b[i] != stack->low)
 		i++;
+	printf("%zu\n", i);
 	if(i > (stack->index_b / 2))
-	{
-		while(stack->b[0] != stack->low)
+		while(stack->b[stack->index_b - 1] != stack->low)
 			rotate(stack, 'b');
-	}
 	else
-	{
-		while(stack->b[0] != stack->low)
+		while(stack->b[stack->index_b - 1] != stack->low)
 			revrotate(stack, 'b');
-	}
 	if(stack->a[0] > stack->max)
 		stack->max = stack->a[0];
 	else if(stack->a[0] < stack->low)
 		stack->low = stack->a[0];
-}*/
+	push_b(stack);
+}
 
-void ft_algowheel(t_stack *stack)
+void ft_algowheel(t_stack *stack, t_ch *chunk)
 {
 	size_t i;
-	//int j = 5;
 	int k;
 	int non;
 
-
-	/*if(stack->a[0] > stack->max | stack->a[0] < stack->low)
+	if(stack->a[0] > stack->max | stack->a[0] < stack->low)
 	{
-		printf("ENTRO\n");
 		ft_minmax(stack);
 		return ;
-	}	*/
+	}
 	i = 0;
-	while(stack->a[0] < stack->b[i])
+	getdonechunk(stack, chunk, stack->index_b);
+	while(stack->a[0] < chunk->ch[i])
 		i++;
 	if (!i)
 		non = 1;
 	else
-		i--;
-	k = stack->b[i];
-	printf("%zu\n", i);
+		i--;	
+	k = chunk->ch[i];
 	if(i > (stack->index_b / 2) || non == 1)
-	{
-		printf("%d,  %d\n", stack->b[stack->index_b - 1], k);
 		while(stack->b[0] != k)
-			rotate(stack, 'b');
-	}
+			revrotate(stack, 'b');
 	else
 		while(stack->b[stack->index_b - 1] != k)
-			revrotate(stack, 'b');
+			rotate(stack, 'b');
 	push_b(stack);
 }
 

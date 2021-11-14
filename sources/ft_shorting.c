@@ -87,7 +87,13 @@ void threeshort_b(t_stack *stack)
 		swap(stack, 'b');
 	else if(stack->b[0] < stack->b[1] && stack->b[1] > stack->b[2] 
 		&& stack->b[0] < stack->b[2])
-	rotate(stack, 'b');
+		rotate(stack, 'b');
+	else if(stack->b[0] < stack->b[1] && stack->b[1] < stack->b[2] 
+		&& stack->b[0] < stack->b[2])
+		{
+			swap(stack, 'b');
+			revrotate(stack, 'b');
+		}
 }
 
 int find_best(int *a, int c, size_t l)

@@ -12,25 +12,25 @@
 
 #include "ps_header.h"
 
-static size_t findpositionlow(t_stack *stack)
+static size_t findpositionmax(t_stack *stack)
 {
 	size_t i;
 
 	i = 0;
-	while(stack->a[i] != stack->low)
+	while(stack->b[i] != stack->max)
 		i++;
 	return(i);
 }
-static void	ft_strdup_struct(const int *a, t_stack *aux, size_t index_a)
+static void	ft_strdup_struct(const int *b, t_stack *aux, size_t index_b)
 {
 	size_t	i;
 
 	i = 0;
-	aux->a = malloc(sizeof(int) * index_a);
-	aux->index_a = index_a;
-	while(i < index_a)
+	aux->b = malloc(sizeof(int) * index_b);
+	aux->index_b = index_b;
+	while(i < index_b)
 	{
-		aux->a[i] = a[i];
+		aux->b[i] = b[i];
 		i++;
 	}
 }
@@ -44,30 +44,30 @@ void getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize)
 
 	i = 0;
 	u = 0;
-	if(chunk->ch)
-		//free(chunk->ch);
+	if(chunk->pivot)
+		free(chunk->ch);
 	chunk->ch = malloc(sizeof(int) * chunksize);
-	ft_strdup_struct(stack->a, &aux, chunksize);
+	ft_strdup_struct(stack->b, &aux, chunksize);
 	aux_ch = chunksize;
 	while (i < chunksize)
 	{
-		ft_get_numlow(&aux);
-		chunk->ch[i] = aux.low;
+		ft_get_nummax(&aux);
+		chunk->ch[i] = aux.max;
 		chunk->index_ch++;
-		u = findpositionlow(&aux);
-		while(u < aux.index_a && aux.a[u + 1])
+		u = findpositionmax(&aux);
+		while(u < aux.index_b && aux.b[u + 1])
 			{
-				aux.a[u] = aux.a[u + 1];
+				aux.b[u] = aux.b[u + 1];
 				u++;
 			}
-		aux.index_a--;
+		aux.index_b--;
 		i++;
 	}
 	if(chunksize % 2 == 0)
 		chunk->pivot = chunk->ch[chunksize / 2 - 1];
 	else
-		chunk->pivot = chunk->ch[(int)(chunksize / 2)];
-	free (aux.a);
+		chunk->pivot = chunk->ch[(chunksize / 2)];
+	free (aux.b);
 }
 
 void	ft_get_numlow(t_stack *stack)
@@ -98,6 +98,33 @@ void	ft_get_numlow(t_stack *stack)
 	return ;
 }
 
+void	ft_get_nummax(t_stack *stack)
+{
+	t_stack *aux;
+	size_t check;
+	size_t count;
+	size_t tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_b)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while(tmp < stack->index_b)
+		{
+			if (stack->b[count] >= aux->b[tmp])
+				check++;
+			if(check == stack->index_b)
+				stack->max = stack->b[count];
+			tmp++;
+		}
+		count++;
+	}
+	return ;
+}
 
 
 
