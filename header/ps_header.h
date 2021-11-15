@@ -66,8 +66,7 @@ void	aftershort(t_stack *stack);
 int		find_best(int *a, int c, size_t l);
 void	fourshort(t_stack *stack);
 void	fiveshort(t_stack *stack);
-void	sixshort(t_stack *stack);
 void	ft_algowheel(t_stack *stack, t_ch *chunk);
-
+void	longshort(t_stack *stack, t_ch *chunk);
 
 #endif

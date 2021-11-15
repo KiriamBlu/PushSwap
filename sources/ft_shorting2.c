@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:25:01 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/12 16:49:52 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/15 09:27:15 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,22 @@ void fiveshort(t_stack *stack)
 	aftershort(stack);
 }
 
-void sixshort(t_stack *stack)
+void longshort(t_stack *stack, t_ch *chunk)
 {
-	int i;
-
-	i = 0;
-	while(i < 3)
-	{	
-		if(find_best(stack->a, stack->low, stack->index_a) == 1)
-			while(stack->a[0] != stack->low)
-				rotate(stack, 'a');
-		else
-			while(stack->a[0] != stack->low)
-				revrotate(stack, 'a');
-		push_b(stack);
-		ft_get_numlow(stack);
-		i++;
-	}
+	push_b(stack);
+	push_b(stack);
+	push_b(stack);
 	threeshort_b(stack);
-	threeshort_a(stack);
-	ft_print_list(stack);
-	stack->index_b += i;
-	aftershort(stack);
+	stack->low = stack->b[2];
+	stack->max = stack->b[0];
+	while(stack->index_a != 0)
+		ft_algowheel(stack, chunk);
+	if(find_best(stack->b, stack->max, stack->index_b) == 1)
+		while(stack->b[0] != stack->max)
+			rotate(stack, 'b');
+		else
+			while(stack->b[0] != stack->max)
+				revrotate(stack, 'b');
+	while(stack->index_b != 0)
+		push_a(stack);
 }
