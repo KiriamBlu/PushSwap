@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 10:26:29 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/11 10:42:19 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/16 15:35:40 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,60 @@ int find_bestforpivot(int *a, int c, size_t l)
 		j++;
 	}
 	return(decidemiddle(m));
+}
+
+void	ft_get_numlow(t_stack *stack)
+{
+	t_stack *aux;
+	size_t check;
+	size_t count;
+	size_t tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_a)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while(tmp < stack->index_a)
+		{
+			if (stack->a[count] <= aux->a[tmp])
+				check++;
+			if(check == stack->index_a)
+				stack->low = stack->a[count];
+			tmp++;
+		}
+		count++;
+	}
+	return ;
+}
+
+void	ft_get_nummax(t_stack *stack)
+{
+	t_stack *aux;
+	size_t check;
+	size_t count;
+	size_t tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_b)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while(tmp < stack->index_b)
+		{
+			if (stack->b[count] >= aux->b[tmp])
+				check++;
+			if(check == stack->index_b)
+				stack->max = stack->b[count];
+			tmp++;
+		}
+		count++;
+	}
+	return ;
 }

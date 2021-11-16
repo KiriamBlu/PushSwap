@@ -41,6 +41,7 @@ int		ft_isnum(int c);
 void	ft_get_numlow(t_stack *stack);
 void	ft_get_nummax(t_stack *stack);
 void	getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize);
+int		getdonechunk_a(t_stack *stack, size_t chunksize);
 int 	ft_get_nothing_else_num(int argc ,char const **argv);
 int 	ft_check_sign(int argc, const char **str);
 int		ft_atoi_special(const char *str, char ***ls);
@@ -68,5 +69,6 @@ void	fourshort(t_stack *stack);
 void	fiveshort(t_stack *stack);
 void	ft_algowheel(t_stack *stack, t_ch *chunk);
 void	longshort(t_stack *stack, t_ch *chunk);
+int		find_bestforpivot(int *a, int c, size_t l);
 
 #endif

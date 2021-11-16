@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/15 09:39:33 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/16 16:40:46 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,14 @@ int main(int argc, char const **argv)
 	t_stack		stack;
 	t_ch		chunk;
 
-	chunk.ch = NULL;
 	ft_args_managment(argc, argv, &stack);
-	printf("START\n");
-	ft_print_list(&stack);
+	//	printf("START\n");
+	//ft_print_list(&stack);
 	ft_shorting(&stack, &chunk);
-	ft_print_list(&stack);
+	//ft_print_list(&stack);
 	ft_free_list(&stack);
 	free(chunk.ch);
-	system("leaks push_swap");
 	return 0;
 }
+
 

@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:27:24 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/15 09:42:58 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/16 13:52:14 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,68 +63,11 @@ void getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize)
 		aux.index_b--;
 		i++;
 	}
-	if(chunksize % 2 == 0)
-		chunk->pivot = chunk->ch[chunksize / 2 - 1];
-	else
-		chunk->pivot = chunk->ch[(chunksize / 2)];
 	free (aux.b);
 }
 
-void	ft_get_numlow(t_stack *stack)
-{
-	t_stack *aux;
-	size_t check;
-	size_t count;
-	size_t tmp;
 
-	count = 0;
-	aux = NULL;
-	aux = stack;
-	while (count < stack->index_a)
-	{
-		tmp = 0;
-		aux = stack;
-		check = 0;
-		while(tmp < stack->index_a)
-		{
-			if (stack->a[count] <= aux->a[tmp])
-				check++;
-			if(check == stack->index_a)
-				stack->low = stack->a[count];
-			tmp++;
-		}
-		count++;
-	}
-	return ;
-}
 
-void	ft_get_nummax(t_stack *stack)
-{
-	t_stack *aux;
-	size_t check;
-	size_t count;
-	size_t tmp;
-
-	count = 0;
-	aux = NULL;
-	aux = stack;
-	while (count < stack->index_b)
-	{
-		tmp = 0;
-		aux = stack;
-		check = 0;
-		while(tmp < stack->index_b)
-		{
-			if (stack->b[count] >= aux->b[tmp])
-				check++;
-			if(check == stack->index_b)
-				stack->max = stack->b[count];
-			tmp++;
-		}
-		count++;
-	}
-	return ;
-}
 
 
 
