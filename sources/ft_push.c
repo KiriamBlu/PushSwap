@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 17:09:42 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/16 14:18:08 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:53:21 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void push_b(t_stack *stack)
 void push_a(t_stack *stack)
 {
 	size_t i;
+	int num;
 
+	num = stack->b[0];
 	printf("pa\n");
 	if(stack->a[0])
 	{
@@ -54,7 +56,7 @@ void push_a(t_stack *stack)
 	}
 	else
 		++stack->index_a;
-	stack->a[0] = stack->b[0];
+	stack->a[0] = num;
 	i = 0;
 	stack->index_b--;
 	while(i <= stack->index_b)

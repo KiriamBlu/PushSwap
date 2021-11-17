@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/16 16:40:46 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:53:15 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,4 @@ int main(int argc, char const **argv)
 	free(chunk.ch);
 	return 0;
 }
-
 

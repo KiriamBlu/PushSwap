@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:25:01 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/16 16:39:49 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:53:19 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,6 @@ void	aftershort(t_stack *stack)
 		push_a(stack);
 		stack->index_b--;
 	}
-}
-
-static int therearenumberlowerpivot(int *a, int pivot, size_t l)
-{
-	size_t i;
-
-	i = 0;
-	while(i < l)
-	{
-		if(a[i] <= pivot)
-			return(1);
-		i++;
-	}
-	return(0);
 }
 
 void fourshort(t_stack *stack)
@@ -81,10 +67,27 @@ void fiveshort(t_stack *stack)
 	aftershort(stack);
 }
 
+static size_t getpositionlowerpivot(int *a, int pivot, size_t l)
+{
+	size_t i;
+
+	i = 0;
+	while(i < l)
+	{
+		if(a[i] <= pivot)
+			return(i);
+		i++;
+	}
+	return(-404);
+}
+
 void longshort(t_stack *stack, t_ch *chunk)
 {
 	int pivot;
+	size_t i;
+	size_t position;
 
+	/////////////////////////////////////////////////////
 	push_b(stack);
 	push_b(stack);
 	push_b(stack);
@@ -92,19 +95,26 @@ void longshort(t_stack *stack, t_ch *chunk)
 	stack->low = stack->b[2];
 	stack->max = stack->b[0];
 	pivot = getdonechunk_a(stack, stack->index_a);
+	/////////////////////////////////////////////////////
+	i = 0;
 	while(stack->index_a != 0)
 	{
+		position = 0;
 		if(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
 		{
-			if(find_bestforpivot(stack->a, pivot, stack->index_a) == -1)
-				while(stack->a[0] > pivot)
-					rotate(stack, 'a');
-			else
-				while(stack->a[0] > pivot)
-					revrotate(stack, 'a');
+			position = getpositionlowerpivot(stack->a, pivot, stack->index_a);
+			getdonechunk(stack, chunk, stack->index_b);
+			i = 0;
+			while(stack->a[position] < chunk->ch[i])
+				i++;
+			i--;
+			ft_getargsready(position, i, stack);
+			ft_prepa(stack, pivot);
+			ft_algowheel(stack, chunk, i);
+			ft_print_list(stack);
 		}
-		ft_algowheel(stack, chunk);
 	}
+	///////////////////////////////////////////////////////
 	if(find_best(stack->b, stack->max, stack->index_b) == 1)
 		while(stack->b[0] != stack->max)
 			rotate(stack, 'b');
@@ -113,4 +123,6 @@ void longshort(t_stack *stack, t_ch *chunk)
 				revrotate(stack, 'b');
 	while(stack->index_b != 0)
 		push_a(stack);
+	ft_print_list(stack);
+	////////////////////////////////////////////////////////
 }

@@ -15,7 +15,8 @@ SRCS =  ./sources/push_swap.c \
 		./sources/ft_shorting3.c \
 		./sources/ft_shorting4.c \
 		./sources/ft_algowheel.c \
-		./sources/ft_shortingforlong.c
+		./sources/ft_shortingforlong.c \
+		./sources/ft_getargsready.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -51,3 +52,5 @@ fclean: clean
 re: clean all
 
 .PHONY: all clean fclean re
+
+#./push_swap  13 -479 454 -246 -388 -128 -86 -327 -281 23 -57 461 323 -434 // EN EL ULTIMO NO HACE CORRECTAMENTE EL FIND BEST

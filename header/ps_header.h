@@ -67,8 +67,11 @@ void	aftershort(t_stack *stack);
 int		find_best(int *a, int c, size_t l);
 void	fourshort(t_stack *stack);
 void	fiveshort(t_stack *stack);
-void	ft_algowheel(t_stack *stack, t_ch *chunk);
+void	ft_algowheel(t_stack *stack, t_ch *chunk, size_t i);
 void	longshort(t_stack *stack, t_ch *chunk);
 int		find_bestforpivot(int *a, int c, size_t l);
+int		therearenumberlowerpivot(int *a, int pivot, size_t l);
+void	ft_getargsready(size_t pos_a, size_t pos_b ,t_stack *stack);
+void	ft_prepa(t_stack *stack, int pivot);
 
 #endif
