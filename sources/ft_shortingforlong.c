@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 10:26:29 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/16 15:35:40 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:53:17 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int decidemiddle(int m)
 {
-	if(m < 0)
+	if(m > 0)
 		return(-1);
 	else
 		return(1);
@@ -103,3 +103,75 @@ void	ft_get_nummax(t_stack *stack)
 	}
 	return ;
 }
+
+static size_t getpositionlowerpivot(int *a, int pivot, size_t l)
+{
+	size_t i;
+
+	if(find_bestforpivot(a, pivot, l) == -1)
+	{
+		i = 0;
+		while(i < l)
+		{
+			if(a[i] <= pivot)
+				return(i);
+			i++;
+		}
+	}
+	else
+	{
+		i = l - 1;
+		while(i > 0)
+		{
+			if(a[i] <= pivot)
+				return(i);
+			i--;
+		}
+	}
+	return(-404);
+}
+
+void recursiveshort(t_stack *stack, t_ch *chunk)
+{
+	int pivot;
+	size_t i;
+	size_t position;
+	int numa;
+
+	i = 0;
+	pivot = getdonechunk_a(stack, stack->index_a);
+	while(stack->index_a != 0)
+	{
+		position = 0;
+		if(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
+		{
+			if(stack->index_a != 1)
+				position = getpositionlowerpivot(stack->a, pivot, stack->index_a);
+			else
+				position = 0;
+			getdonechunk(stack, chunk, stack->index_b);
+			i = 0;
+			while(stack->a[position] < chunk->ch[i])
+				i++;
+			if(i == 0)
+			i = stack->index_b;
+			else	
+				i--;
+			numa = stack->a[position];
+			ft_getargsready(position, i, stack);
+			ft_prepa(stack, pivot, numa);
+			ft_algowheel(stack, chunk, i);
+			ft_print_list(stack);
+		}
+		else
+			recursiveshort(stack, chunk);
+	}
+}
+
+
+
+
+
+
+
+
