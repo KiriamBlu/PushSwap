@@ -32,12 +32,12 @@ static void ft_minmax(t_stack *stack)
 	push_b(stack);
 }
 
-static size_t find_k(int k, t_stack *stack)
+static size_t find_k(int k, int *stack)
 {
 	size_t i;
 
 	i = 0;
-	while(stack->b[i] != k)
+	while(stack[i] != k)
 		i++;
 	return(i);
 }
@@ -52,7 +52,7 @@ void ft_algowheel(t_stack *stack, t_ch *chunk, size_t i)
 		return ;
 	}
 	k = chunk->ch[i];
-	if(find_k(k, stack) <= ((stack->index_b / 2) - 1))
+	if(find_k(k, stack->b) < ((stack->index_b / 2) - 1))
 		while(stack->b[stack->index_b - 1] != k)
 			rotate(stack, 'b');
 	else
@@ -62,9 +62,9 @@ void ft_algowheel(t_stack *stack, t_ch *chunk, size_t i)
 	//ft_print_list(stack);
 }
 
-void ft_prepa(t_stack *stack, int pivot, int position)
+void ft_prepa(t_stack *stack, int position)
 {
-	if(find_bestforpivot(stack->a, pivot, stack->index_a) == -1)
+	if(find_k(position, stack->a) < (stack->index_a / 2))
 		while(stack->a[0] != position)
 			rotate(stack, 'a');
 	else

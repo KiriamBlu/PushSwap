@@ -53,3 +53,4 @@ re: clean all
 
 .PHONY: all clean fclean re
 
+#./push_swap  13 -479 454 -246 -388 -128 -86 -327 -281 23 -57 461 323 -434 // EN EL ULTIMO NO HACE CORRECTAMENTE EL FIND BEST

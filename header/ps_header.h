@@ -72,7 +72,7 @@ void	longshort(t_stack *stack, t_ch *chunk);
 int		find_bestforpivot(int *a, int c, size_t l);
 int		therearenumberlowerpivot(int *a, int pivot, size_t l);
 void	ft_getargsready(size_t pos_a, size_t pos_b ,t_stack *stack);
-void	ft_prepa(t_stack *stack, int pivot, int position);
+void	ft_prepa(t_stack *stack, int position);
 void	recursiveshort(t_stack *stack, t_ch *chunk);
 
 #endif

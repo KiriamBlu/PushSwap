@@ -15,9 +15,7 @@
 void push_b(t_stack *stack)
 {
 	size_t i;
-	int num;
 
-	num = stack->a[0];
 	printf("pb\n");
 	if(stack->b[0])
 	{
@@ -30,7 +28,7 @@ void push_b(t_stack *stack)
 	}
 	else
 		++stack->index_b;
-	stack->b[0] = num;
+	stack->b[0] = stack->a[0];
 	i = 0;
 	stack->index_a--;
 	while(i <= stack->index_a)

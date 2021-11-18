@@ -52,8 +52,8 @@ int main(int argc, char const **argv)
 	t_ch		chunk;
 
 	ft_args_managment(argc, argv, &stack);
-	printf("START\n");
-	ft_print_list(&stack);
+	//printf("START\n");
+	//ft_print_list(&stack);
 	ft_shorting(&stack, &chunk);
 	//ft_print_list(&stack);
 	ft_free_list(&stack);

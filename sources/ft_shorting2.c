@@ -67,6 +67,54 @@ void fiveshort(t_stack *stack)
 	aftershort(stack);
 }
 
+static size_t getpositionlowerpivot(int *a, int pivot, size_t l)
+{
+	size_t i;
+
+	i = 0;
+	while(i < l)
+	{
+		if(a[i] <= pivot)
+			return(i);
+		i++;
+	}
+	return(-404);
+}
+
+void recursiveshort(t_stack *stack, t_ch *chunk)
+{
+	int pivot;
+	size_t i;
+	size_t position;
+	int numa;
+
+	i = 0;
+	pivot = getdonechunk_a(stack, stack->index_a);
+	if(stack->index_a != 0)
+	{
+		position = 0;
+		if(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
+		{
+			if(stack->index_a != 1)
+				position = getpositionlowerpivot(stack->a, pivot, stack->index_a);
+			else
+				position = 0;
+			getdonechunk(stack, chunk, stack->index_b);
+			i = 0;
+			while(stack->a[position] < chunk->ch[i])
+				i++;
+			if(i == 0)
+			i = stack->index_b;
+			else	
+				i--;
+			numa = stack->a[position];
+			
+			ft_prepa(stack, numa);
+			ft_algowheel(stack, chunk, i);
+		}
+		recursiveshort(stack, chunk);
+	}
+}
 
 void longshort(t_stack *stack, t_ch *chunk)
 {
@@ -77,9 +125,10 @@ void longshort(t_stack *stack, t_ch *chunk)
 	threeshort_b(stack);
 	stack->low = stack->b[2];
 	stack->max = stack->b[0];
-	////////////////////////////////////////////////////
-	recursiveshort(stack, chunk);
-	//////////////////////////////////////////////////////
+	//ft_print_list(stack);
+	///////////////////////////////////////////////////////
+	recursiveshort( stack, chunk);
+	///////////////////////////////////////////////////////
 	if(find_best(stack->b, stack->max, stack->index_b) == 1)
 		while(stack->b[0] != stack->max)
 			rotate(stack, 'b');
@@ -88,6 +137,6 @@ void longshort(t_stack *stack, t_ch *chunk)
 				revrotate(stack, 'b');
 	while(stack->index_b != 0)
 		push_a(stack);
-	ft_print_list(stack);
+	//ft_print_list(stack);
 	////////////////////////////////////////////////////////
 }
