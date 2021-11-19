@@ -19,13 +19,6 @@ typedef struct s_stack
 	size_t index_b;
 } t_stack;
 
-typedef struct s_ch
-{
-	int *ch;
-	int pivot;
-	size_t index_ch;
-} t_ch;
-
 /*--------------------------NUMERIC CONTROL--------------------------------------*/
 
 int		ft_error(int argc, char const **argv);
@@ -40,8 +33,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		ft_isnum(int c);
 void	ft_get_numlow(t_stack *stack);
 void	ft_get_nummax(t_stack *stack);
-void	getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize);
-int		getdonechunk_a(t_stack *stack, size_t chunksize);
+int		*getdonechunk(int *stack, size_t chunksize, int sign);
+int		getpositionpivot(size_t chunksize, int *stack);
 int 	ft_get_nothing_else_num(int argc ,char const **argv);
 int 	ft_check_sign(int argc, const char **str);
 int		ft_atoi_special(const char *str, char ***ls);
@@ -58,7 +51,7 @@ void rrevrotate(t_stack *stack);
 
 /*---------------------------Algorithms-----------------------------------------*/
 
-void	ft_shorting(t_stack *stack, t_ch *chunk);
+void	ft_shorting(t_stack *stack);
 void	smallshort(t_stack *stack);
 void	twoshort(t_stack *stack, int c);
 void	threeshort_a(t_stack *stack);
@@ -67,12 +60,12 @@ void	aftershort(t_stack *stack);
 int		find_best(int *a, int c, size_t l);
 void	fourshort(t_stack *stack);
 void	fiveshort(t_stack *stack);
-void	ft_algowheel(t_stack *stack, t_ch *chunk, size_t i);
-void	longshort(t_stack *stack, t_ch *chunk);
+void	ft_algowheel(t_stack *stack, int k);
+void	longshort(t_stack *stack);
 int		find_bestforpivot(int *a, int c, size_t l);
 int		therearenumberlowerpivot(int *a, int pivot, size_t l);
 void	ft_getargsready(size_t pos_a, size_t pos_b ,t_stack *stack);
 void	ft_prepa(t_stack *stack, int position);
-void	recursiveshort(t_stack *stack, t_ch *chunk);
+void	recursiveshort(t_stack *stack);
 
 #endif

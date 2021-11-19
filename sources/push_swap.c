@@ -49,15 +49,14 @@ void	ft_free_list(t_stack *stack)
 int main(int argc, char const **argv)
 {
 	t_stack		stack;
-	t_ch		chunk;
 
 	ft_args_managment(argc, argv, &stack);
 	//printf("START\n");
 	//ft_print_list(&stack);
-	ft_shorting(&stack, &chunk);
+	ft_shorting(&stack);
 	//ft_print_list(&stack);
 	ft_free_list(&stack);
-	free(chunk.ch);
+	system("leaks push_swap");
 	return 0;
 }
 

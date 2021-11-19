@@ -42,22 +42,21 @@ static size_t find_k(int k, int *stack)
 	return(i);
 }
 
-void ft_algowheel(t_stack *stack, t_ch *chunk, size_t i)
+void ft_algowheel(t_stack *stack, int  k)
 {
-	int k;
-
 	if(stack->a[0] > stack->max | stack->a[0] < stack->low)
 	{
 		ft_minmax(stack);
 		return ;
 	}
-	k = chunk->ch[i];
 	if(find_k(k, stack->b) < ((stack->index_b / 2) - 1))
 		while(stack->b[stack->index_b - 1] != k)
 			rotate(stack, 'b');
 	else
+	{
 		while(stack->b[stack->index_b - 1] != k)
 			revrotate(stack, 'b');
+	}
 	push_b(stack);
 	//ft_print_list(stack);
 }

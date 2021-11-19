@@ -12,15 +12,12 @@
 
 #include "ps_header.h"
 
-void ft_shorting(t_stack *stack, t_ch *chunk)
+void ft_shorting(t_stack *stack)
 {
 	if (stack->index_a >= 2 && stack->index_a <= 5)
 		smallshort(stack);
 	else
-	{
-		chunk->ch = NULL;
-		longshort(stack, chunk);
-	}
+		longshort(stack);
 	return ;
 }
 

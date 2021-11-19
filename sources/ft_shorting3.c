@@ -12,60 +12,142 @@
 
 #include "ps_header.h"
 
-static size_t findpositionmax(t_stack *stack)
+static int is_not_intmp(int stack, int *tmp, size_t l)
 {
 	size_t i;
+	int s;
 
 	i = 0;
-	while(stack->b[i] != stack->max)
-		i++;
-	return(i);
+	s = stack;
+	if(l != 0)
+	{	
+		while(i < l)
+		{
+			if(stack == tmp[i])
+				return(-1);
+			i++;
+		}
+	}
+	return(1);
 }
-static void	ft_strdup_struct(const int *b, t_stack *aux, size_t index_b)
+static size_t getspace(int *stack, int *tmp, size_t chunksize, size_t l)
 {
-	size_t	i;
+	size_t space;
+	size_t i;
+	size_t k;
 
-	i = 0;
-	aux->b = malloc(sizeof(int) * index_b);
-	aux->index_b = index_b;
-	while(i < index_b)
+	i = 0;	
+	space = chunksize;
+	while(i < chunksize)
 	{
-		aux->b[i] = b[i];
+		k = 0;
+		while(k < l)
+		{
+			if (stack[i] == tmp[k])
+				space = space - 1;
+			k++;
+		}
 		i++;
 	}
+	return(space);
 }
 
-void getdonechunk(t_stack *stack, t_ch *chunk, size_t chunksize)
+static int ft_get_max(int *stack, int *aux,size_t chunksize, size_t l)
 {
-	t_stack aux;
 	size_t i;
-	size_t u;
-	size_t	aux_ch;
+	size_t tmp;
+	size_t space;
+	size_t check;
 
 	i = 0;
-	u = 0;
-	if(chunk->pivot)
-		free(chunk->ch);
-	chunk->ch = malloc(sizeof(int) * chunksize);
-	ft_strdup_struct(stack->b, &aux, chunksize);
-	aux_ch = chunksize;
-	while (i < chunksize)
+	space = chunksize;
+	while(i < chunksize)
 	{
-		ft_get_nummax(&aux);
-		chunk->ch[i] = aux.max;
-		chunk->index_ch++;
-		u = findpositionmax(&aux);
-		while(u < aux.index_b && aux.b[u + 1])
+		check = 0;
+		tmp = 0;
+		if(is_not_intmp(stack[i], aux, l) == 1)
+		{
+			space = getspace(stack, aux, chunksize, l);
+			while(tmp < chunksize)
 			{
-				aux.b[u] = aux.b[u + 1];
-				u++;
+				if (stack[i] >= stack[tmp])
+					check++;
+				if(check == space)
+					return(stack[i]);
+				tmp++;
 			}
-		aux.index_b--;
+		}
 		i++;
 	}
-	free (aux.b);
+	return(0);
 }
 
+
+static int ft_get_min(int *stack, int *aux,size_t chunksize, size_t l)
+{
+	size_t i;
+	size_t tmp;
+	size_t space;
+	size_t check;
+
+	i = 0;
+	space = chunksize;
+	while(i < chunksize)
+	{
+		check = 0;
+		tmp = 0;
+		if(is_not_intmp(stack[i], aux, l) == 1)
+		{
+			space = getspace(stack, aux, chunksize, l);
+			while(tmp < chunksize)
+			{
+				if (stack[i] <= stack[tmp])
+					check++;
+				if(check == space)
+					return(stack[i]);
+				tmp++;
+			}
+		}
+		i++;
+	}
+	return(0);
+}
+int getpositionpivot(size_t chunksize, int *stack)
+{
+	int pivot;
+	int *chunk;
+
+	pivot = 0;
+	chunk = getdonechunk(stack, chunksize, 0);
+	if(chunksize % 2 == 0)
+		pivot = chunk[chunksize / 2 - 1];
+	else
+		pivot = chunk[(chunksize / 2)];
+	free(chunk);
+	return (pivot);
+}
+
+int *getdonechunk(int *stack, size_t chunksize, int sign)
+{
+	int *aux;
+	size_t i;
+
+	i = 0;
+	aux = malloc(sizeof(int) * chunksize);
+	if(sign == 1)
+		while (i < chunksize)
+		{
+			aux[i] = ft_get_max(stack, aux, chunksize, i);
+			i++;
+		}
+	else
+		while (i < chunksize)
+		{
+			aux[i] = ft_get_min(stack, aux, chunksize, i);
+			i++;
+		}
+	return(aux);
+}
 
 
 

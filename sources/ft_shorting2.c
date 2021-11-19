@@ -81,15 +81,16 @@ static size_t getpositionlowerpivot(int *a, int pivot, size_t l)
 	return(-404);
 }
 
-void recursiveshort(t_stack *stack, t_ch *chunk)
+void recursiveshort(t_stack *stack)
 {
 	int pivot;
 	size_t i;
 	size_t position;
+	int *aux;
 	int numa;
 
 	i = 0;
-	pivot = getdonechunk_a(stack, stack->index_a);
+	pivot = getpositionpivot(stack->index_a, stack->a);
 	if(stack->index_a != 0)
 	{
 		position = 0;
@@ -99,24 +100,25 @@ void recursiveshort(t_stack *stack, t_ch *chunk)
 				position = getpositionlowerpivot(stack->a, pivot, stack->index_a);
 			else
 				position = 0;
-			getdonechunk(stack, chunk, stack->index_b);
+			numa = stack->a[position];
+			aux = getdonechunk(stack->b, stack->index_b, 1);
 			i = 0;
-			while(stack->a[position] < chunk->ch[i])
+			while(numa < aux[i] && i < stack->index_b)
 				i++;
 			if(i == 0)
-			i = stack->index_b;
+			i = stack->index_b - 1;
 			else	
 				i--;
-			numa = stack->a[position];
-			
 			ft_prepa(stack, numa);
-			ft_algowheel(stack, chunk, i);
+			ft_algowheel(stack, aux[i]);
+			ft_print_list(stack);
+			free(aux);
 		}
-		recursiveshort(stack, chunk);
+		recursiveshort(stack);
 	}
 }
 
-void longshort(t_stack *stack, t_ch *chunk)
+void longshort(t_stack *stack)
 {
 	/////////////////////////////////////////////////////
 	push_b(stack);
@@ -125,9 +127,9 @@ void longshort(t_stack *stack, t_ch *chunk)
 	threeshort_b(stack);
 	stack->low = stack->b[2];
 	stack->max = stack->b[0];
-	//ft_print_list(stack);
+	ft_print_list(stack);
 	///////////////////////////////////////////////////////
-	recursiveshort( stack, chunk);
+	recursiveshort(stack);
 	///////////////////////////////////////////////////////
 	if(find_best(stack->b, stack->max, stack->index_b) == 1)
 		while(stack->b[0] != stack->max)
@@ -137,6 +139,7 @@ void longshort(t_stack *stack, t_ch *chunk)
 				revrotate(stack, 'b');
 	while(stack->index_b != 0)
 		push_a(stack);
-	//ft_print_list(stack);
+	ft_print_list(stack);
 	////////////////////////////////////////////////////////
 }
+
