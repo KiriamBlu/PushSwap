@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_shorting2.c                                     :+:      :+:    :+:   */
@@ -67,17 +67,30 @@ void fiveshort(t_stack *stack)
 	aftershort(stack);
 }
 
-static size_t getpositionlowerpivot(int *a, int pivot, size_t l)
+static size_t getlowerpivot(int *a, int pivot, size_t l, int m)
 {
 	size_t i;
 
 	i = 0;
-	while(i < l)
+	if (m == -1)
 	{
-		if(a[i] <= pivot)
-			return(i);
-		i++;
+		while(i < l)
+		{
+			if(a[i] <= pivot)
+				return(i);
+			i++;
+		}
 	}
+	else
+	{
+		i = l - 1;
+		while(i > 0)
+		{
+			if(a[i] <= pivot)
+				return(i);
+			i--;
+		}
+	}	
 	return(-404);
 }
 
@@ -97,7 +110,7 @@ void recursiveshort(t_stack *stack)
 		if(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
 		{
 			if(stack->index_a != 1)
-				position = getpositionlowerpivot(stack->a, pivot, stack->index_a);
+				position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
 			else
 				position = 0;
 			numa = stack->a[position];
@@ -111,7 +124,7 @@ void recursiveshort(t_stack *stack)
 				i--;
 			ft_prepa(stack, numa);
 			ft_algowheel(stack, aux[i]);
-			ft_print_list(stack);
+			//ft_print_list(stack);
 			free(aux);
 		}
 		recursiveshort(stack);
@@ -127,7 +140,7 @@ void longshort(t_stack *stack)
 	threeshort_b(stack);
 	stack->low = stack->b[2];
 	stack->max = stack->b[0];
-	ft_print_list(stack);
+	//ft_print_list(stack);
 	///////////////////////////////////////////////////////
 	recursiveshort(stack);
 	///////////////////////////////////////////////////////
@@ -139,7 +152,7 @@ void longshort(t_stack *stack)
 				revrotate(stack, 'b');
 	while(stack->index_b != 0)
 		push_a(stack);
-	ft_print_list(stack);
+	//ft_print_list(stack);
 	////////////////////////////////////////////////////////
 }
 

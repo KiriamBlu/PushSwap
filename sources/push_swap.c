@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/17 16:53:15 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/23 12:39:28 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main(int argc, char const **argv)
 	ft_shorting(&stack);
 	//ft_print_list(&stack);
 	ft_free_list(&stack);
-	system("leaks push_swap");
+	//system("leaks push_swap");
 	return 0;
 }
 
