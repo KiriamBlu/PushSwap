@@ -94,6 +94,38 @@ static size_t getlowerpivot(int *a, int pivot, size_t l, int m)
 	return(-404);
 }
 
+static size_t findereal(int aux, int *stack, size_t index)
+{
+	size_t i;
+
+	i = 0;
+	while(stack[i] != aux && i < index)
+		i++;
+	return(i);
+}
+
+void dodoble(t_stack *stack, size_t position, size_t aux)
+{
+	int a;
+	int b;
+	int auxa;
+	int auxb;
+
+	a = find_best(stack->a, stack->a[position], stack->index_a);
+	b = find_best(stack->b, stack->b[aux], stack->index_b);
+	auxa = stack->a[position];
+	auxb = stack->b[aux];
+	if(stack->a[0] != stack->a[position] && stack->b[0] != stack->b[aux])
+	{
+		if(a == 1 && b == 1)
+			while(stack->a[0] != auxa && stack->b[0] != auxb)
+				rrotate(stack);
+		else if(a == -1 && b == -1)
+			while(stack->a[0] != auxa && stack->b[0] != auxb)
+					rrevrotate(stack);
+	}
+}
+
 void recursiveshort(t_stack *stack)
 {
 	int pivot;
@@ -107,7 +139,7 @@ void recursiveshort(t_stack *stack)
 	if(stack->index_a != 0)
 	{
 		position = 0;
-		if(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
+		while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
 		{
 			if(stack->index_a != 1)
 				position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
@@ -119,9 +151,8 @@ void recursiveshort(t_stack *stack)
 			while(numa < aux[i] && i < stack->index_b)
 				i++;
 			if(i == 0)
-			i = stack->index_b - 1;
-			else	
-				i--;
+				i = stack->index_b - 1;
+			dodoble(stack, position, findereal(aux[i], stack->b, stack->index_b));
 			ft_prepa(stack, numa);
 			ft_algowheel(stack, aux[i]);
 			//ft_print_list(stack);

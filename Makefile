@@ -25,7 +25,7 @@ EXE_DIR = ./
 
 CC := cc
 GCC := gcc
-CFLAGS := -Wall -Werror -Wextra 
+CFLAGS := -Wall -Wextra #-Werror  
 MV := mv -f
 RM := rm -f
 

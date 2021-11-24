@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 13:41:00 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/23 13:09:31 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/24 10:11:31 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void ft_algowheel(t_stack *stack, int  k)
 		return ;
 	}
 	if(find_k(k, stack->b) < ((stack->index_b / 2) - 1))
-		while(stack->b[stack->index_b - 1] != k)
+		while(stack->b[0] != k)
 			rotate(stack, 'b');
 	else
 	{
-		while(stack->b[stack->index_b - 1] != k)
+		while(stack->b[0] != k)
 			revrotate(stack, 'b');
 	}
 	push_b(stack);
