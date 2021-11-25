@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/24 13:09:10 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/25 11:08:00 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,25 @@ void ft_mount_list(int argc, char const **argv, t_stack *stack) //REDUCIR UNA LI
 {
 	char	***ls;
 	int		pos;
+	size_t	aux;
 	int		i;
 	int		j;
 
 	i = -1;
 	pos = 0;
+	aux = 0;
 	ls = malloc(sizeof(char **) * argc);
 	while (i++ < argc - 1)
 	{
 		argv = argv + 1;
 		ls[i] = ft_split((char *)*argv, ' ');
 	}
-	stack->a = malloc(sizeof(int) * ft_lsnum(ls));
-	stack->b = malloc(sizeof(int) * ft_lsnum(ls));
-	stack->aux = malloc(sizeof(int) * ft_lsnum(ls));
-	stack->index_a = ft_lsnum(ls);
+	aux = ft_lsnum(ls);
+	stack->a = malloc(sizeof(int) * aux);
+	stack->b = malloc(sizeof(int) * aux);
+	stack->aux = malloc(sizeof(int) * aux);
+	stack->aux_a = ft_calloc(sizeof(int), aux);
+	stack->index_a = aux;
 	j = 0;
 	while(ls[pos])
 	{

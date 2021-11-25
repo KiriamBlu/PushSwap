@@ -13,6 +13,7 @@ typedef struct s_stack
 {
 	int *a;
 	int *b;
+	int *aux_a;
 	int *aux;
 	int low;
 	int max;
