@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:27:24 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/23 15:34:33 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:01:52 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,31 @@ int *getdonechunk(int *stack, size_t chunksize, int sign)
 	return(aux);
 }
 
+int *getdonechunkforaux(int *stack, size_t chunksize, int new_b)
+{
+	size_t i;
+	size_t j;
+	int *aux;
 
+	i = 0;
+	aux = ft_calloc(sizeof(int) , chunksize);
+	while(i < chunksize - 1)
+	{
+		aux[i] = stack[i];
+		i++;
+	}
+	i = 0;
+	while(i < chunksize - 1 && aux[i] > new_b)
+		i++;
+	j = chunksize;
+	while(j > i)
+	{
+		aux[j] = aux[j - 1];
+		j--;
+	}
+	aux[i] = new_b;
+	return(aux);
+}
 
 
 

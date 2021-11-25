@@ -125,6 +125,65 @@ void dodoble(t_stack *stack, size_t position, size_t aux)
 					rrevrotate(stack);
 	}
 }
+size_t getb(t_stack *stack, int numa)
+{
+	int *temp;
+	size_t i;
+
+	temp = NULL;
+	if(stack->index_b > 3)
+	{
+		i = 0;
+		temp = getdonechunkforaux(stack->aux, stack->index_b, stack->b[0]);
+		while(i++ < stack->index_b)
+			if(temp[i] != stack->aux[i])
+					stack->aux[i] = temp[i];
+			free(temp);
+	}
+	i = 0;
+	while(numa < stack->aux[i] && i < stack->index_b)
+	i++;
+	return(i);
+}
+
+int geta(t_stack *stack, int pivot)
+{
+	size_t position;
+
+	position = 0;
+	if(stack->index_a != 1)
+		position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
+	else
+		position = 0;
+	return(position);
+}
+
+void recursiveshortforlong(t_stack *stack)
+{
+	int pivot;
+	
+	size_t i;
+	size_t position;
+	int numa;
+
+	i = 0;
+	pivot = getpositionpivot(stack->index_a, stack->a);
+	if(stack->index_a != 0)
+	{
+		position = 0;
+		while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
+		{
+			position = geta(stack, pivot);
+			numa = stack->a[position];
+			i = getb(stack,  numa);
+			dodoble(stack, position, findereal(stack->aux[i], stack->b, stack->index_b));
+			ft_prepa(stack, numa);
+			ft_algowheel(stack, stack->aux[i]);
+		}
+		//ft_print_list(stack);
+		recursiveshort(stack);
+	}
+}
 
 void recursiveshort(t_stack *stack)
 {
@@ -164,16 +223,27 @@ void recursiveshort(t_stack *stack)
 
 void longshort(t_stack *stack)
 {
+	int i;
+
+	i = 0;
 	/////////////////////////////////////////////////////
 	push_b(stack);
 	push_b(stack);
 	push_b(stack);
 	threeshort_b(stack);
+	while(i < 3)
+	{
+		stack->aux[i] = stack->b[i];
+		i++;
+	}
 	stack->low = stack->b[2];
 	stack->max = stack->b[0];
 	//ft_print_list(stack);
 	///////////////////////////////////////////////////////
-	recursiveshort(stack);
+	if(stack->index_a > 250)
+		recursiveshort(stack);
+	else
+		recursiveshortforlong(stack);
 	///////////////////////////////////////////////////////
 	if(find_best(stack->b, stack->max, stack->index_b) == 1)
 		while(stack->b[0] != stack->max)

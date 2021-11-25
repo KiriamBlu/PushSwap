@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:45:49 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/24 09:57:34 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:09:18 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int find_best(int *a, int c, size_t l)
 {
 	int i;
 	unsigned long j;
-	
+
 	i = 0;
 	j = 0;
 	while(a[j] != c)

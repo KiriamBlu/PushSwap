@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 13:41:00 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/24 10:11:31 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:03:45 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static void ft_minmax(t_stack *stack)
 	while(stack->b[i] != stack->low)
 		i++;
 	if(i < ((stack->index_b / 2) - 1))
-		while(stack->b[stack->index_b - 1] != stack->low)
+		while(stack->b[0] != stack->max)
 			rotate(stack, 'b');
 	else
-		while(stack->b[stack->index_b - 1] != stack->low)
+		while(stack->b[0] != stack->max)
 			revrotate(stack, 'b');
 	if(stack->a[0] > stack->max)
 		stack->max = stack->a[0];
@@ -49,6 +49,7 @@ void ft_algowheel(t_stack *stack, int  k)
 		ft_minmax(stack);
 		return ;
 	}
+
 	if(find_k(k, stack->b) < ((stack->index_b / 2) - 1))
 		while(stack->b[0] != k)
 			rotate(stack, 'b');
@@ -58,7 +59,6 @@ void ft_algowheel(t_stack *stack, int  k)
 			revrotate(stack, 'b');
 	}
 	push_b(stack);
-	//ft_print_list(stack);
 }
 
 void ft_prepa(t_stack *stack, int position)

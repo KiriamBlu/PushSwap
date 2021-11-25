@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/23 15:37:11 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:23:38 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_free_list(t_stack *stack)
 {
 	free(stack->a);
 	free(stack->b);
+	free(stack->aux);
 	return ;
 }
 
