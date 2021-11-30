@@ -132,7 +132,7 @@ static size_t getlowerpivotforlong(t_stack *stack, int pivot, int m, size_t pru)
 		while(i > 0)
 		{
 			if(stack->a[i] <= pivot && checkaux(stack->aux_a, stack->a[i], pru) == 1)
-				return(i);
+					return(i);
 		i--;
 		}
 	}
@@ -170,6 +170,7 @@ void dodoble(t_stack *stack, size_t position, size_t aux)
 					rrevrotate(stack);
 	}
 }
+
 size_t getb(t_stack *stack, int numa, size_t count)
 {
 	int *temp;
@@ -190,19 +191,17 @@ size_t getb(t_stack *stack, int numa, size_t count)
 	}
 	i = 0;
 	while(numa < stack->aux[i] && i < stack->index_b)
-	i++;
+		i++;
 	return(i);
 }
 
-int geta(t_stack *stack, int pivot, size_t pru)
+int geta(t_stack *stack, int pivot, size_t pru, int s)
 {
 	size_t position;
 
 	position = 0;
-	if((stack->index_a != 1 && (pru % 2) != 0) || pru == 0)
-		position = getlowerpivotforlong(stack, pivot, -1, pru);
-	else if(stack->index_a != 1 && (pru % 2) == 0 )
-		position = getlowerpivotforlong(stack, pivot, 1, pru);
+	if(stack->index_a != 1)
+		position = getlowerpivotforlong(stack, pivot, s, pru);
 	else
 		position = 0;
 	return(position);
@@ -212,10 +211,12 @@ int geta(t_stack *stack, int pivot, size_t pru)
 
 void recursiveshortforlong(t_stack *stack)
 {
+	static int s;
 	int pivot;
 	size_t count;
 	size_t i;
 	size_t l;
+	size_t m;
 	size_t position;
 	size_t trueposition;
 	size_t tmp;
@@ -225,43 +226,67 @@ void recursiveshortforlong(t_stack *stack)
 
 	i = 0;
 	tmp = 0;
-	z = 0;
 	pivot = getpositionpivot(stack->index_a, stack->a);
-	if(stack->index_a != 0)
+	if(stack->index_b == 3)
+		s = find_bestforpivot(stack->a, pivot, stack->index_a);
+	position = 0;
+	z = 0;
+	while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 || z < ((stack->index_a/50)*10))
 	{
-		position = 0;
-		while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 && z != 100)
+		l = 1;
+		count = 0;
+		while(count < stack->index_a - 1)
 		{
-			l = 3;
-			count = 0;
-			while(count < stack->index_a - 1)
+			position = geta(stack, pivot, count, s);
+			if(position > 2147483647)
+				break;
+			stack->aux_a[count] = stack->a[position];
+			trueposition = position;
+			numa = stack->a[position];
+			i = getb(stack, numa, count);
+			tmp = findereal(stack->aux[i], stack->b, stack->index_b);
+			if (tmp < ((stack->index_b / 2 - (stack->index_b / 3) - l) - 1) || tmp > ((stack->index_b / 2 + (stack->index_b / 3) + l) - 1))
+				break;
+			//printf("%lu\n", (50/stack->index_a) * 100);
+			//printf("%zu\n", l);
+			if(count == l)  
 			{
-				position = geta(stack, pivot, count);
-				if(position > 2147483647) /*|| position < ((stack->index_a/2 - stack->index_a/3) - 1) || position > ((stack->index_a/2 + stack->index_a/3) - 1)*/
-					break;
-				stack->aux_a[count] = stack->a[position];
-				trueposition = position;
-				numa = stack->a[position];
-				i = getb(stack,  numa, count);
-				tmp = findereal(stack->aux[i], stack->b, stack->index_b);
-				if (tmp < ((stack->index_b / 2 - (stack->index_b / l) - 5) - 1) || tmp > ((stack->index_b / 2 + (stack->index_b / l) + 5) - 1))
-					break;
-				if(count == 15)
-					l = l + 1;
-				count++;
+				//printf("entro\n");
+				m = 0;
+				l = l + 2;
+				while(stack->aux_a[m])
+				{
+					stack->aux_a[m] = 0;
+					m++;
+				}
+				count = 0;
 			}
-			numb = stack->b[tmp];
-			dodoble(stack, trueposition, tmp);
-			ft_prepa(stack, numa);
-			ft_algowheel(stack, numb);
-			z++;
-			//ft_print_list(stack);
+			count++;
 		}
+		numb = stack->b[tmp];
+		dodoble(stack, trueposition, tmp);
+		ft_prepa(stack, numa);
+		ft_algowheel(stack, numb);
+		z++;
 		//ft_print_list(stack);
-		if(stack->index_a != 1)
-			recursiveshortforlong(stack);
 	}
+	if(stack->index_a != 1)
+		recursiveshortforlong(stack);
+	//ft_print_list(stack);
 }
+
+static size_t geti(int numa, int *aux, size_t stack)
+{
+	size_t i;
+
+	i = 0;
+	while(numa < aux[i] && i < stack)
+		i++;
+	if(i == 0)
+		i = stack - 1;
+	return(i);
+}
+
 
 void recursiveshort(t_stack *stack)
 {
@@ -271,35 +296,25 @@ void recursiveshort(t_stack *stack)
 	int *aux;
 	int numa;
 
-	i = 0;
 	pivot = getpositionpivot(stack->index_a, stack->a);
-	if(stack->index_a != 0)
+	while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
 	{
-		position = 0;
-		while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
-		{
-			if(stack->index_a != 1 && find_bestforpivot(stack->a, pivot, stack->index_a) == 1) // DECIDIR MITAD EEN LA QUE MIRAR POR ESTE -1
-				position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
-			else if(stack->index_a != 1 && find_bestforpivot(stack->a, pivot, stack->index_a) == -1)
-				getlowerpivot(stack->a, pivot, stack->index_a, -1);
-			else if(stack->index_a != 1)
-				position = 0;
-			numa = stack->a[position];
-			aux = getdonechunk(stack->b, stack->index_b, 1);
-			i = 0;
-			while(numa < aux[i] && i < stack->index_b)
-				i++;
-			if(i == 0)
-				i = stack->index_b - 1;
-			dodoble(stack, position, findereal(aux[i], stack->b, stack->index_b));
-			ft_prepa(stack, numa);
-			ft_algowheel(stack, aux[i]);
-			//ft_print_list(stack);
-			free(aux);
-		}
-		recursiveshort(stack);
+		if(stack->index_a != 1)
+			position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
+		else 
+			position = 0;
+		numa = stack->a[position];
+		aux = getdonechunk(stack->b, stack->index_b, 1);
+		i = geti(numa, aux, stack->index_b);
+		dodoble(stack, position, findereal(aux[i], stack->b, stack->index_b));
+		ft_prepa(stack, numa);
+		ft_algowheel(stack, aux[i]);
+		free(aux);
 	}
+	if(stack->index_a != 1)
+		recursiveshort(stack);
 }
+
 
 void longshort(t_stack *stack)
 {

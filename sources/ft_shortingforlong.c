@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 10:26:29 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/17 16:53:17 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/11/26 09:20:57 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static int decidemiddle(int m)
 {
 	if(m < 0)
-		return(-1);
-	else
 		return(1);
+	else
+		return(-1);
 }
 
-int find_bestforpivot(int *a, int c, size_t l)
+int  find_bestforpivot(int *a, int c, size_t l)
 {
 	int m;
 	unsigned long j;
