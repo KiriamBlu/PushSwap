@@ -209,70 +209,82 @@ int geta(t_stack *stack, int pivot, size_t pru, int s)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+static size_t resetaux(size_t l, t_stack *stack)
+{	
+	size_t m;
+
+	m = 0;
+	l = l + 2;
+	while(stack->aux_a[m])
+	{
+		stack->aux_a[m] = 0;
+		m++;
+	}
+	return(l);
+}
+
+static size_t *getpositions(t_stack *stack, int pivot, int s, size_t *a)
+{
+	size_t count;
+	size_t i;
+	size_t l;
+	size_t position;
+	size_t trueposition;
+	size_t tmp;
+
+	l = 1;
+	count = 0;
+	while(count < stack->index_a - 1)
+	{
+		position = geta(stack, pivot, count, s);
+		if(position > 2147483647)
+			break;
+		stack->aux_a[count] = stack->a[position];
+		trueposition = position;
+		i = getb(stack, stack->a[position], count);
+		tmp = findereal(stack->aux[i], stack->b, stack->index_b);
+		if (tmp < ((stack->index_b / 2 - (stack->index_b / 3) - l) - 1) || tmp > ((stack->index_b / 2 + (stack->index_b / 3) + l) - 1))
+			break;
+		if(count == l)
+		{
+			l = resetaux(l, stack);
+			count = 0;
+		}
+		count++;
+	}
+	a[0] = trueposition;
+	a[1] = tmp;
+	return(a); //AQUI ESTAS JOAN
+}
+
 void recursiveshortforlong(t_stack *stack)
 {
 	static int s;
 	int pivot;
-	size_t count;
-	size_t i;
-	size_t l;
-	size_t m;
-	size_t position;
-	size_t trueposition;
-	size_t tmp;
-	size_t z;
 	int numa;
-	int numb;
+	int numb;	
+	size_t z;
+	size_t *a;
 
-	i = 0;
-	tmp = 0;
 	pivot = getpositionpivot(stack->index_a, stack->a);
 	if(stack->index_b == 3)
 		s = find_bestforpivot(stack->a, pivot, stack->index_a);
-	position = 0;
 	z = 0;
 	while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 || z < ((stack->index_a/50)*10))
 	{
-		l = 1;
-		count = 0;
-		while(count < stack->index_a - 1)
-		{
-			position = geta(stack, pivot, count, s);
-			if(position > 2147483647)
-				break;
-			stack->aux_a[count] = stack->a[position];
-			trueposition = position;
-			numa = stack->a[position];
-			i = getb(stack, numa, count);
-			tmp = findereal(stack->aux[i], stack->b, stack->index_b);
-			if (tmp < ((stack->index_b / 2 - (stack->index_b / 3) - l) - 1) || tmp > ((stack->index_b / 2 + (stack->index_b / 3) + l) - 1))
-				break;
-			//printf("%lu\n", (50/stack->index_a) * 100);
-			//printf("%zu\n", l);
-			if(count == l)  
-			{
-				//printf("entro\n");
-				m = 0;
-				l = l + 2;
-				while(stack->aux_a[m])
-				{
-					stack->aux_a[m] = 0;
-					m++;
-				}
-				count = 0;
-			}
-			count++;
-		}
-		numb = stack->b[tmp];
-		dodoble(stack, trueposition, tmp);
+		a = malloc(sizeof(size_t) * 2);
+		a = getpositions(stack, pivot, s, a);
+		numa = stack->a[a[0]];
+		numb = stack->b[a[1]];
+		dodoble(stack, a[0], a[1]);
+		free(a);
 		ft_prepa(stack, numa);
 		ft_algowheel(stack, numb);
 		z++;
-		//ft_print_list(stack);
 	}
 	if(stack->index_a != 1)
 		recursiveshortforlong(stack);
-	//ft_print_list(stack);
 }
 
 static size_t geti(int numa, int *aux, size_t stack)
