@@ -23,25 +23,17 @@ void	aftershort(t_stack *stack)
 
 void fourshort(t_stack *stack)
 {
-	int i;
-
-	i = 0;
-	while(i < 2)
-	{	
-		if(find_best(stack->a, stack->low, stack->index_a) == 1)
-			while(stack->a[0] != stack->low)
-				rotate(stack, 'a');
-		else
-			while(stack->a[0] != stack->low)
-				revrotate(stack, 'a');
-		push_b(stack);
-		ft_get_numlow(stack);
-		i++;
-	}
-	twoshort(stack, 'b');
-	twoshort(stack, 'a');
-	stack->index_b += i;
-	aftershort(stack);
+	
+	ft_get_numlow(stack);
+	if(find_best(stack->a, stack->low, stack->index_a) == 1)
+		while(stack->a[0] != stack->low)
+			rotate(stack, 'a');
+	else
+		while(stack->a[0] != stack->low)
+			revrotate(stack, 'a');
+	push_b(stack);
+	threeshort_a(stack);
+	push_a(stack);
 }
 
 void fiveshort(t_stack *stack)
@@ -49,6 +41,7 @@ void fiveshort(t_stack *stack)
 	int i;
 
 	i = 0;
+	ft_get_numlow(stack);
 	while(i < 2)
 	{	
 		if(find_best(stack->a, stack->low, stack->index_a) == 1)
@@ -63,8 +56,9 @@ void fiveshort(t_stack *stack)
 	}
 	twoshort(stack, 'b');
 	threeshort_a(stack);
-	stack->index_b += i;
-	aftershort(stack);
+	push_a(stack);
+	push_a(stack);
+	push_a(stack);
 }
 
 static int checkaux(int *aux_a, int num, size_t pru)
@@ -215,7 +209,7 @@ static size_t resetaux(size_t l, t_stack *stack)
 	size_t m;
 
 	m = 0;
-	l = l + 2;
+	l = l + 1;
 	while(stack->aux_a[m])
 	{
 		stack->aux_a[m] = 0;
@@ -233,7 +227,7 @@ static size_t *getpositions(t_stack *stack, int pivot, int s, size_t *a)
 	size_t trueposition;
 	size_t tmp;
 
-	l = 1;
+	l = 0;
 	count = 0;
 	while(count < stack->index_a - 1)
 	{
@@ -255,7 +249,7 @@ static size_t *getpositions(t_stack *stack, int pivot, int s, size_t *a)
 	}
 	a[0] = trueposition;
 	a[1] = tmp;
-	return(a); //AQUI ESTAS JOAN
+	return(a);
 }
 
 void recursiveshortforlong(t_stack *stack)
@@ -265,13 +259,15 @@ void recursiveshortforlong(t_stack *stack)
 	int numa;
 	int numb;	
 	size_t z;
+	size_t l;
 	size_t *a;
 
 	pivot = getpositionpivot(stack->index_a, stack->a);
 	if(stack->index_b == 3)
 		s = find_bestforpivot(stack->a, pivot, stack->index_a);
 	z = 0;
-	while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 || z < ((stack->index_a/50)*10))
+	l = (stack->index_a/3);
+	while(z <= l && therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 && stack->index_a != 5)
 	{
 		a = malloc(sizeof(size_t) * 2);
 		a = getpositions(stack, pivot, s, a);
@@ -283,7 +279,7 @@ void recursiveshortforlong(t_stack *stack)
 		ft_algowheel(stack, numb);
 		z++;
 	}
-	if(stack->index_a != 1)
+	if(stack->index_a != 5)
 		recursiveshortforlong(stack);
 }
 
@@ -323,7 +319,7 @@ void recursiveshort(t_stack *stack)
 		ft_algowheel(stack, aux[i]);
 		free(aux);
 	}
-	if(stack->index_a != 1)
+	if(stack->index_a != 4)
 		recursiveshort(stack);
 }
 
@@ -352,6 +348,8 @@ void longshort(t_stack *stack)
 	else
 		recursiveshortforlong(stack);
 	///////////////////////////////////////////////////////
+	fiveshort(stack);
+	ft_get_nummax(stack);
 	if(find_best(stack->b, stack->max, stack->index_b) == 1)
 		while(stack->b[0] != stack->max)
 			rotate(stack, 'b');
@@ -360,7 +358,6 @@ void longshort(t_stack *stack)
 				revrotate(stack, 'b');
 	while(stack->index_b != 0)
 		push_a(stack);
-	//ft_print_list(stack);
 	////////////////////////////////////////////////////////
 }
 
