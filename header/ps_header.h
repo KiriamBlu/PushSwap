@@ -66,11 +66,14 @@ void	ft_algowheel(t_stack *stack, int k);
 void	longshort(t_stack *stack);
 void	longlongshort(t_stack *stack);
 int		find_bestforpivot(int *a, int c, size_t l);
-int		therearenumberlowerpivot(int *a, int pivot, size_t l);
+int		numlowerpiv(int *a, int pivot, size_t l);
 void	ft_getargsready(size_t pos_a, size_t pos_b ,t_stack *stack);
 void	ft_prepa(t_stack *stack, int position);
 void	recursiveshort(t_stack *stack);
+void	recursiveshortforlong(t_stack *stack);
 int		*getdonechunkforaux(int *stack, size_t chunksize, int new_b);
+size_t	findereal(int aux, int *stack, size_t index);
+void	dodoble(t_stack *stack, size_t position, size_t aux);
 
 
 #endif

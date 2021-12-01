@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 10:26:29 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/26 09:20:57 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/01 17:27:15 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ int  find_bestforpivot(int *a, int c, size_t l)
 		j++;
 	}
 	return(decidemiddle(m));
+}
+
+size_t findereal(int aux, int *stack, size_t index)
+{
+	size_t i;
+
+	i = 0;
+	while(stack[i] != aux && i < index - 1)
+		i++;
+	return(i);
 }
 
 void	ft_get_numlow(t_stack *stack)

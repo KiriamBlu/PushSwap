@@ -61,6 +61,30 @@ void fiveshort(t_stack *stack)
 	push_a(stack);
 }
 
+
+
+void dodoble(t_stack *stack, size_t position, size_t aux)
+{
+	int a;
+	int b;
+	int auxa;
+	int auxb;
+
+	a = find_best(stack->a, stack->a[position], stack->index_a);
+	b = find_best(stack->b, stack->b[aux], stack->index_b);
+	auxa = stack->a[position];
+	auxb = stack->b[aux];
+	if(stack->a[0] != stack->a[position] && stack->b[0] != stack->b[aux])
+	{
+		if(a == 1 && b == 1)
+			while(stack->a[0] != auxa && stack->b[0] != auxb)
+				rrotate(stack);
+		else if(a == -1 && b == -1)
+			while(stack->a[0] != auxa && stack->b[0] != auxb)
+					rrevrotate(stack);
+	}
+}
+
 static int checkaux(int *aux_a, int num, size_t pru)
 {
 	size_t l;
@@ -78,33 +102,7 @@ static int checkaux(int *aux_a, int num, size_t pru)
 	return(1);
 }
 
-static size_t getlowerpivot(int *a, int pivot, size_t l, int m)
-{
-	size_t i;
-
-	i = 0;
-	if (m == -1)
-	{
-		while(i < l)
-		{
-			if(a[i] <= pivot)
-				return(i);
-			i++;
-		}
-	}
-	else
-	{
-		i = l - 1;
-		while(i > 0)
-		{
-			if(a[i] <= pivot)
-				return(i);
-			i--;
-		}
-	}	
-	return(-404);
-}
-
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 static size_t getlowerpivotforlong(t_stack *stack, int pivot, int m, size_t pru)
 {
@@ -131,38 +129,6 @@ static size_t getlowerpivotforlong(t_stack *stack, int pivot, int m, size_t pru)
 		}
 	}
 	return(2147483648);
-}
-
-static size_t findereal(int aux, int *stack, size_t index)
-{
-	size_t i;
-
-	i = 0;
-	while(stack[i] != aux && i < index - 1)
-		i++;
-	return(i);
-}
-
-void dodoble(t_stack *stack, size_t position, size_t aux)
-{
-	int a;
-	int b;
-	int auxa;
-	int auxb;
-
-	a = find_best(stack->a, stack->a[position], stack->index_a);
-	b = find_best(stack->b, stack->b[aux], stack->index_b);
-	auxa = stack->a[position];
-	auxb = stack->b[aux];
-	if(stack->a[0] != stack->a[position] && stack->b[0] != stack->b[aux])
-	{
-		if(a == 1 && b == 1)
-			while(stack->a[0] != auxa && stack->b[0] != auxb)
-				rrotate(stack);
-		else if(a == -1 && b == -1)
-			while(stack->a[0] != auxa && stack->b[0] != auxb)
-					rrevrotate(stack);
-	}
 }
 
 size_t getb(t_stack *stack, int numa, size_t count)
@@ -201,15 +167,15 @@ int geta(t_stack *stack, int pivot, size_t pru, int s)
 	return(position);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
 
-
-static size_t resetaux(size_t l, t_stack *stack)
+static size_t *resetaux(size_t *l, t_stack *stack)
 {	
 	size_t m;
 
 	m = 0;
-	l = l + 1;
+	l[0] = l[0] + 1;
+	l[1] = 0;
 	while(stack->aux_a[m])
 	{
 		stack->aux_a[m] = 0;
@@ -220,35 +186,29 @@ static size_t resetaux(size_t l, t_stack *stack)
 
 static size_t *getpositions(t_stack *stack, int pivot, int s, size_t *a)
 {
-	size_t count;
 	size_t i;
-	size_t l;
+	size_t *l;
 	size_t position;
-	size_t trueposition;
-	size_t tmp;
 
-	l = 0;
-	count = 0;
-	while(count < stack->index_a - 1)
+	l = ft_calloc(sizeof(size_t), 2);
+	a = malloc(sizeof(size_t) * 2);
+	while(l[1] < stack->index_a - 1)
 	{
-		position = geta(stack, pivot, count, s);
+		position = geta(stack, pivot, l[1], s);
 		if(position > 2147483647)
 			break;
-		stack->aux_a[count] = stack->a[position];
-		trueposition = position;
-		i = getb(stack, stack->a[position], count);
-		tmp = findereal(stack->aux[i], stack->b, stack->index_b);
-		if (tmp < ((stack->index_b / 2 - (stack->index_b / 3) - l) - 1) || tmp > ((stack->index_b / 2 + (stack->index_b / 3) + l) - 1))
+		stack->aux_a[l[1]] = stack->a[position];
+		a[0] = position;
+		i = getb(stack, stack->a[position], l[1]);
+		a[1] = findereal(stack->aux[i], stack->b, stack->index_b);
+		if (a[1] < ((stack->index_b / 2 - (stack->index_b / 3) - l[0]) - 1) 
+			|| a[1] > ((stack->index_b / 2 + (stack->index_b / 3) + l[0]) - 1))
 			break;
-		if(count == l)
-		{
+		if(l[1] == l[0])
 			l = resetaux(l, stack);
-			count = 0;
-		}
-		count++;
+		l[1]++;
 	}
-	a[0] = trueposition;
-	a[1] = tmp;
+	free(l);
 	return(a);
 }
 
@@ -256,108 +216,33 @@ void recursiveshortforlong(t_stack *stack)
 {
 	static int s;
 	int pivot;
-	int numa;
-	int numb;	
-	size_t z;
-	size_t l;
+	int num[2];
+	size_t z[2];
 	size_t *a;
 
+	z[0] = 0;
+	z[1] = (stack->index_a/3);
 	pivot = getpositionpivot(stack->index_a, stack->a);
 	if(stack->index_b == 3)
 		s = find_bestforpivot(stack->a, pivot, stack->index_a);
-	z = 0;
-	l = (stack->index_a/3);
-	while(z <= l && therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 && stack->index_a != 5)
+	while(z[0] <= z[1] && numlowerpiv(stack->a, pivot, stack->index_a) == 1
+		&& stack->index_a != 5)
 	{
-		a = malloc(sizeof(size_t) * 2);
 		a = getpositions(stack, pivot, s, a);
-		numa = stack->a[a[0]];
-		numb = stack->b[a[1]];
+		num[0] = stack->a[a[0]];
+		num[1] = stack->b[a[1]];
 		dodoble(stack, a[0], a[1]);
 		free(a);
-		ft_prepa(stack, numa);
-		ft_algowheel(stack, numb);
-		z++;
+		ft_prepa(stack, num[0]);
+		ft_algowheel(stack, num[1]);
+		z[0]++;
 	}
 	if(stack->index_a != 5)
 		recursiveshortforlong(stack);
 }
 
-static size_t geti(int numa, int *aux, size_t stack)
-{
-	size_t i;
-
-	i = 0;
-	while(numa < aux[i] && i < stack)
-		i++;
-	if(i == 0)
-		i = stack - 1;
-	return(i);
-}
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 
-void recursiveshort(t_stack *stack)
-{
-	int pivot;
-	size_t i;
-	size_t position;
-	int *aux;
-	int numa;
 
-	pivot = getpositionpivot(stack->index_a, stack->a);
-	while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 && stack->index_a != 5)
-	{
-		if(stack->index_a != 1)
-			position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
-		else 
-			position = 0;
-		numa = stack->a[position];
-		aux = getdonechunk(stack->b, stack->index_b, 1);
-		i = geti(numa, aux, stack->index_b);
-		dodoble(stack, position, findereal(aux[i], stack->b, stack->index_b));
-		ft_prepa(stack, numa);
-		ft_algowheel(stack, aux[i]);
-		free(aux);
-	}
-	if(stack->index_a != 5)
-		recursiveshort(stack);
-}
-
-
-void longshort(t_stack *stack)
-{
-	int i;
-
-	i = 0;
-	/////////////////////////////////////////////////////
-	push_b(stack);
-	push_b(stack);
-	push_b(stack);
-	threeshort_b(stack);
-	while(i < 3)
-	{
-		stack->aux[i] = stack->b[i];
-		i++;
-	}
-	stack->low = stack->b[2];
-	stack->max = stack->b[0];
-	//ft_print_list(stack);
-	///////////////////////////////////////////////////////
-	if(stack->index_a < 250)
-		recursiveshort(stack);
-	else
-		recursiveshortforlong(stack);
-	///////////////////////////////////////////////////////
-	fiveshort(stack);
-	ft_get_nummax(stack);
-	if(find_best(stack->b, stack->max, stack->index_b) == 1)
-		while(stack->b[0] != stack->max)
-			rotate(stack, 'b');
-		else
-			while(stack->b[0] != stack->max)
-				revrotate(stack, 'b');
-	while(stack->index_b != 0)
-		push_a(stack);
-	////////////////////////////////////////////////////////
-}
 
