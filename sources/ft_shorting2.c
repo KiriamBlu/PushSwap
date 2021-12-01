@@ -305,7 +305,7 @@ void recursiveshort(t_stack *stack)
 	int numa;
 
 	pivot = getpositionpivot(stack->index_a, stack->a);
-	while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1)
+	while(therearenumberlowerpivot(stack->a, pivot, stack->index_a) == 1 && stack->index_a != 5)
 	{
 		if(stack->index_a != 1)
 			position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
@@ -319,7 +319,7 @@ void recursiveshort(t_stack *stack)
 		ft_algowheel(stack, aux[i]);
 		free(aux);
 	}
-	if(stack->index_a != 4)
+	if(stack->index_a != 5)
 		recursiveshort(stack);
 }
 
