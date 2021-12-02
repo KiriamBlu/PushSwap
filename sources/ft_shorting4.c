@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 16:35:37 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/01 17:27:03 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:14:46 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void longshort(t_stack *stack)
 		recursiveshort(stack);
 	else
 		recursiveshortforlong(stack);
-	fiveshort(stack);
+	threeshort_a(stack);
 	ft_get_nummax(stack);
 	if(find_best(stack->b, stack->max, stack->index_b) == 1)
 		while(stack->b[0] != stack->max)
@@ -98,7 +98,7 @@ void recursiveshort(t_stack *stack)
 
 	pivot = getpositionpivot(stack->index_a, stack->a);
 	while(numlowerpiv(stack->a, pivot, stack->index_a) == 1 
-		&& stack->index_a != 5)
+		&& stack->index_a != 3)
 	{
 		if(stack->index_a != 1)
 			position = getlowerpivot(stack->a, pivot, stack->index_a, -1);
@@ -112,6 +112,6 @@ void recursiveshort(t_stack *stack)
 		ft_algowheel(stack, aux[i]);
 		free(aux);
 	}
-	if(stack->index_a != 5)
+	if(stack->index_a != 3)
 		recursiveshort(stack);
 }

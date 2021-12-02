@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:27:24 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/25 13:09:26 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:40:49 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int is_not_intmp(int stack, int *tmp, size_t l)
 	}
 	return(1);
 }
+
 static size_t getspace(int *stack, int *tmp, size_t chunksize, size_t l)
 {
 	size_t space;

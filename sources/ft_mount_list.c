@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/29 13:39:23 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:15:53 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	free_table(char ***table)
 {
 	int	pos;
-	int i;
+	int	i;
 
 	pos = 0;
 	i = 0;
-	while(table[i])
+	while (table[i])
 	{
 		pos = 0;
 		while (table[i][pos])
@@ -30,7 +30,7 @@ void	free_table(char ***table)
 		i++;
 	}
 	i = 0;
-	while(table[i])
+	while (table[i])
 	{
 		free(table[i]);
 		table[i] = NULL;
@@ -40,90 +40,91 @@ void	free_table(char ***table)
 	table = NULL;
 }
 
-static size_t ft_lsnum(char ***ls)
+static size_t	ft_lsnum(char ***ls)
 {
-	size_t i;
-	size_t j;
-	size_t count;
+	size_t	i;
+	size_t	j;
+	size_t	count;
 
 	i = 0;
 	j = 0;
 	count = 0;
-	while(ls[i])
+	while (ls[i])
 	{
 		j = 0;
-		while(ls[i][j])
+		while (ls[i][j])
 		{
 			count++;
 			j++;
 		}
 		i++;
 	}
-	return(count);
+	return (count);
 }
 
-int	ft_atoi_special(const char *str, char ***ls)
+static int	ft_atoi_special(const char *str, char ***ls, t_stack *stack)
 {
-	int				i;
-	int				sign;
+	int				i[2];
 	unsigned long	nb;
 
-	i = 0;
+	i[0] = 0;
+	i[1] = 0;
 	nb = 0;
-	sign = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' \
-			|| str[i] == '\f' || str[i] == '\v' || str[i] == '\r')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i++] == '-')
-			sign++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-		nb = (nb * 10) + (str[i++] - '0');	
-	if ((nb > 2147483647 && sign == 0) || (nb > 2147483648 && sign >= 1))
+	while (str[i[0]] == ' ' || str[i[0]] == '\n' || str[i[0]] == '\t' \
+			|| str[i[0]] == '\f' || str[i[0]] == '\v' || str[i[0]] == '\r')
+		i[0]++;
+	if (str[i[0]] == '+' || str[i[0]] == '-')
+		if (str[i[0]++] == '-')
+			i[1] = 1;
+	while (str[i[0]] >= '0' && str[i[0]] <= '9')
+		nb = (nb * 10) + (str[i[0]++] - '0');
+	if ((nb > 2147483647 && i[1] == 0) || (nb > 2147483648 && i[1] == 1))
 	{
 		free_table(ls);
+		ft_free_list(stack);
 		write(1, "Error\n", 6);
 		exit (0);
 	}
-	else if (sign != 0)
+	else if (i[1] != 0)
 		return ((int)nb * -1);
 	return ((int) nb);
 }
 
-void ft_mount_list(int argc, char const **argv, t_stack *stack) //REDUCIR UNA LINEA EL CODIGO
+static void	mehelper(t_stack *stack, char ***ls)
 {
-	char	***ls;
-	int		pos;
 	size_t	aux;
-	int		i;
-	int		j;
 
-	i = -1;
-	pos = 0;
-	aux = 0;
-	ls = malloc(sizeof(char **) * argc);
-	while (i++ < argc - 1)
-	{
-		argv = argv + 1;
-		ls[i] = ft_split((char *)*argv, ' ');
-	}
 	aux = ft_lsnum(ls);
 	stack->a = malloc(sizeof(int) * aux);
 	stack->b = malloc(sizeof(int) * aux);
 	stack->aux = malloc(sizeof(int) * aux);
 	stack->aux_a = ft_calloc(sizeof(int), aux);
 	stack->index_a = aux;
+}
+
+void	ft_mount_list(int argc, char const **argv, t_stack *stack)
+{
+	char	***ls;
+	int		pos;
+	int		i;
+	int		j;
+
+	i = -1;
+	pos = 0;
+	ls = malloc(sizeof(char **) * argc);
+	while (i++ < argc - 1)
+	{
+		argv = argv + 1;
+		ls[i] = ft_split((char *)*argv, ' ');
+	}
+	mehelper(stack, ls);
 	j = 0;
-	while(ls[pos])
+	while (ls[pos])
 	{
 		i = 0;
-		while(ls[pos][i])
-			stack->a[j++]  = ft_atoi_special(ls[pos][i++], ls);
+		while (ls[pos][i])
+			stack->a[j++] = ft_atoi_special(ls[pos][i++], ls, stack);
 		pos++;
 	}
 	free_table(ls);
-	return ;
 }
-

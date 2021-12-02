@@ -16,7 +16,8 @@ SRCS =  ./sources/push_swap.c \
 		./sources/ft_algowheel.c \
 		./sources/ft_shortingforlong.c \
 		./sources/ft_getargsready.c \
-		./sources/ft_shorting4.c
+		./sources/ft_shorting4.c \
+		./sources/ft_bigslowshort.c
 
 OBJS = ${SRCS:.c=.o}
 
