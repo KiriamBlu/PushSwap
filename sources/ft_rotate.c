@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 10:26:19 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 15:45:04 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/06 17:09:13 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ int	find_best(int *a, int c, size_t l)
 	if (j >= (l / 2))
 		return (-1);
 	else
-		return(1);
+		return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:30:15 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/02 12:45:31 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/06 17:08:12 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int		ft_not_short(t_stack *a);
 int		ft_get_no_dup(t_stack *a);
 void	ft_args_managment(int argc, char const **argv, t_stack *a);
 void	ft_mount_list(int argc, char const **argv, t_stack *stack);
-void	ft_print_list(t_stack *a);
 void	ft_free_list(t_stack *stack);
 void	ft_error_message(t_stack *stack);
 int		ft_strcmp(char *s1, char *s2);

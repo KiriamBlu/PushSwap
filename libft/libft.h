@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/15 12:07:38 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 16:22:21 by jsanfeli         ###   ########.fr       */
+/*   Created: 2021/12/06 17:01:39 by jsanfeli          #+#    #+#             */
+/*   Updated: 2021/12/06 17:02:00 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 # include<unistd.h>
 # include<stdlib.h>
 # include<string.h>
-
-//Structure lists
-typedef struct s_list
-{
-void *content;
-struct s_list *next;
-} t_list;
 
 //first part
 void	*ft_memset(void *dest, int val, size_t len);
