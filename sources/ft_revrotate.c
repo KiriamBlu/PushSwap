@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 10:57:03 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/02 14:32:13 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/06 13:50:27 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,19 @@ void	revrotate(t_stack *stack, int c)
 	if (c == 'a' && stack->index_a > 1)
 	{
 		printf("rra\n");
-		aux = stack->index_a;
-		i = stack->a[--aux];
-		while (aux > 0)
-		{
+		aux = stack->index_a + 1;
+		i = stack->a[aux - 2];
+		while (--aux > 0)
 			stack->a[aux] = stack->a[aux - 1];
-			aux--;
-		}
 		stack->a[0] = i;
 	}
 	else if (c == 'b' && stack->index_b > 1)
 	{
 		printf("rrb\n");
-		aux = stack->index_b;
-		i = stack->b[--aux];
-		while (aux > 0)
-		{
+		aux = stack->index_b + 1;
+		i = stack->b[aux - 2];
+		while (--aux > 0)
 			stack->b[aux] = stack->b[aux - 1];
-			aux--;
-		}
 		stack->b[0] = i;
 	}
 }

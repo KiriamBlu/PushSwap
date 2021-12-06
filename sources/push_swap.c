@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 12:25:40 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/02 13:05:26 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:11:45 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_error_message(t_stack *stack)
 	exit (0);
 }
 
-void ft_args_managment(int argc, char const **argv, t_stack *stack)
+void	ft_args_managment(int argc, char const **argv, t_stack *stack)
 {
 	size_t	j;
 
@@ -28,15 +28,15 @@ void ft_args_managment(int argc, char const **argv, t_stack *stack)
 		exit (0);
 	ft_mount_list(argc, argv, stack);
 	ft_get_numlow(stack);
-	if(ft_check_sign(argc, argv) == -1)
+	if (ft_check_sign(argc, argv) == -1)
 		ft_error_message(stack);
- 	if (ft_get_nothing_else_num(argc, argv) == -1)
+	if (ft_get_nothing_else_num(argc, argv) == -1)
 		ft_error_message(stack);
- 	if (ft_get_no_dup(stack) == -1)
+	if (ft_get_no_dup(stack) == -1)
 		ft_error_message(stack);
- 	if(ft_not_short(stack) == -1)
+	if (ft_not_short(stack) == -1)
 		exit(0);
- 	return ;
+	return ;
 }
 
 void	ft_free_list(t_stack *stack)
@@ -48,14 +48,12 @@ void	ft_free_list(t_stack *stack)
 	return ;
 }
 
-int main(int argc, char const **argv)
+int	main(int argc, char const **argv)
 {
 	t_stack		stack;
-
 
 	ft_args_managment(argc, argv, &stack);
 	ft_shorting(&stack);
 	ft_free_list(&stack);
-	return 0;
+	return (0);
 }
-

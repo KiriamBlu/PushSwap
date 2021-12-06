@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_shorting2.c                                     :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:25:01 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/11/17 16:53:19 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/06 15:37:54 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,40 @@
 
 void	aftershort(t_stack *stack)
 {
-	while(stack->index_b > 0)
+	while (stack->index_b > 0)
 	{
 		push_a(stack);
 		stack->index_b--;
 	}
 }
 
-void fourshort(t_stack *stack)
+void	fourshort(t_stack *stack)
 {
-	
 	ft_get_numlow(stack);
-	if(find_best(stack->a, stack->low, stack->index_a) == 1)
-		while(stack->a[0] != stack->low)
+	if (find_best(stack->a, stack->low, stack->index_a) == 1)
+		while (stack->a[0] != stack->low)
 			rotate(stack, 'a');
 	else
-		while(stack->a[0] != stack->low)
+		while (stack->a[0] != stack->low)
 			revrotate(stack, 'a');
 	push_b(stack);
 	threeshort_a(stack);
 	push_a(stack);
 }
 
-void fiveshort(t_stack *stack)
+void	fiveshort(t_stack *stack)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	ft_get_numlow(stack);
-	while(i < 2)
+	while (i < 2)
 	{	
-		if(find_best(stack->a, stack->low, stack->index_a) == 1)
-			while(stack->a[0] != stack->low)
+		if (find_best(stack->a, stack->low, stack->index_a) == 1)
+			while (stack->a[0] != stack->low)
 				rotate(stack, 'a');
 		else
-			while(stack->a[0] != stack->low)
+			while (stack->a[0] != stack->low)
 				revrotate(stack, 'a');
 		push_b(stack);
 		ft_get_numlow(stack);
@@ -61,46 +60,48 @@ void fiveshort(t_stack *stack)
 	push_a(stack);
 }
 
-static int checkaux(int *aux_a, int num, size_t pru)
+static int	checkaux(int *aux_a, int num, size_t pru)
 {
-	size_t l;
+	size_t	l;
 
 	l = 0;
-	if(pru != 0)
+	if (pru != 0)
 	{	
-		while(l < pru)
+		while (l < pru)
 		{
-			if(aux_a[l] == num)
-				return(-1);
+			if (aux_a[l] == num)
+				return (-1);
 			l++;
 		}
 	}
-	return(1);
+	return (1);
 }
 
-size_t getlowerpivotforlong(t_stack *stack, int pivot, int m, size_t pru)
+size_t	getlowerpivotforlong(t_stack *stack, int pivot, int m, size_t pru)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (m == -1)
 	{
-		while(i < stack->index_a)
+		while (i < stack->index_a)
 		{
-			if(stack->a[i] <= pivot && checkaux(stack->aux_a, stack->a[i], pru) == 1)
-				return(i);
+			if (stack->a[i] <= pivot
+				&& checkaux(stack->aux_a, stack->a[i], pru) == 1)
+				return (i);
 			i++;
 		}
 	}
 	else
 	{
 		i = stack->index_a - 1;
-		while(i > 0)
+		while (i > 0)
 		{
-			if(stack->a[i] <= pivot && checkaux(stack->aux_a, stack->a[i], pru) == 1)
-					return(i);
-		i--;
+			if (stack->a[i] <= pivot
+				&& checkaux(stack->aux_a, stack->a[i], pru) == 1)
+				return (i);
+			i--;
 		}
 	}
-	return(2147483648);
+	return (2147483648);
 }
