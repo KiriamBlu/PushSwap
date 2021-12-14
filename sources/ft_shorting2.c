@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 09:25:01 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 15:37:54 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:10:51 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	fiveshort(t_stack *stack)
 	}
 	twoshort(stack, 'b');
 	threeshort_a(stack);
-	push_a(stack);
 	push_a(stack);
 	push_a(stack);
 }

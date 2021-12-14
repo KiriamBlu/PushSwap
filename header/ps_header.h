@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:30:15 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 17:08:12 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:28:02 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int		*getdonechunk(int *stack, size_t chunksize, int sign);
 int		getpositionpivot(size_t chunksize, int *stack);
 int		ft_get_nothing_else_num(int argc, char const **argv);
 int		ft_check_sign(int argc, const char **str);
+void	checkls(char ***ls, int i);
+void	free_table(char ***table);
 
 /*----------------------------Movements--------------------------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:12:57 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/02 14:10:40 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:35:48 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,14 @@ int	ft_check_sign(int argc, const char **str)
 		count++;
 	}
 	return (1);
+}
+
+void	checkls(char ***ls, int i)
+{
+	if (!ls[i])
+	{
+		free_table(ls);
+		write(1, "Error\n", 6);
+		exit (0);
+	}
 }
