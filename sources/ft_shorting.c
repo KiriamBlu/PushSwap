@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 11:45:49 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 13:49:08 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/14 19:13:11 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	ft_shorting(t_stack *stack)
 {
+	size_t i;
+
+	i = 0;
 	if (stack->index_a >= 2 && stack->index_a <= 5)
 		smallshort(stack);
 	else
 		longshort(stack);
+	// while(++i < stack->index_a)
+	// 	printf("%d\n", stack->a[i]);
 	return ;
 }
 

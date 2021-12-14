@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:35:36 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/14 16:28:51 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/14 19:10:09 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	ft_mount_list(int argc, char const **argv, t_stack *stack)
 	{
 		argv = argv + 1;
 		ls[i] = ft_split((char *)*argv, ' ');
-		checkls(ls, i);
 	}
 	mehelper(stack, ls);
 	j = 0;
