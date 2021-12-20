@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 04:33:29 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/15 04:33:50 by jsanfeli         ###   ########.fr       */
+/*   Created: 2021/12/15 04:37:08 by jsanfeli          #+#    #+#             */
+/*   Updated: 2021/12/15 04:39:59 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *str, int c, size_t n)
+char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {
-	size_t	a;
+	size_t	stack;
 
-	a = 0;
-	while (a < n)
+	if (*to_find == '\0')
+		return ((char *)str);
+	stack = ft_strlen((char *)to_find);
+	while (*str != '\0' && len-- >= stack)
 	{
-		((unsigned char *)str)[a] = c;
-		a++;
+		if (*str == *to_find && ft_memcmp(str, to_find, stack) == 0)
+			return ((char *)str);
+		str++;
 	}
-	return (str);
+	return (NULL);
 }

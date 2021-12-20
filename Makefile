@@ -1,55 +1,35 @@
-NAME := push_swap
-LIBFT_NAME = libft.a
+CC		= gcc -Wall -Wextra -Werror
+NAME	= pipex
+LIB	= ./libft/libft.a
+HEADER	= ./src
+OBJS	= $(SRCS:.c=.o)
+OBJSB	= $(BONUS:.c=.o)
+SRCS	=  ./src/mandatory/pipex.c ./src/mandatory/pipex_utils.c
 
-SRCS =  ./sources/push_swap.c \
-		./sources/ft_mount_list.c \
-		./sources/ft_error.c \
-		./sources/ft_error_two.c \
-		./sources/ft_push.c \
-		./sources/ft_swap.c \
-		./sources/ft_rotate.c \
-		./sources/ft_revrotate.c \
-		./sources/ft_shorting.c \
-		./sources/ft_shorting2.c \
-		./sources/ft_shorting3.c \
-		./sources/ft_algowheel.c \
-		./sources/ft_shortingforlong.c \
-		./sources/ft_getargsready.c \
-		./sources/ft_shorting4.c \
-		./sources/ft_bigslowshort.c
+BONUS	=  ./src/bonus/pipex_bonus_utils.c ./src/bonus/pipex_bonus.c
 
-OBJS = ${SRCS:.c=.o}
+all:	$(NAME)
 
-LIBFT_DIR := ./libft/
-INC_DIR := ./header/
-EXE_DIR = ./
 
-CC := cc
-GCC := gcc
-CFLAGS := -Wall -Wextra -Werror  
-MV := mv -f
-RM := rm -f
+$(NAME):	$(OBJS)
+	@make -C ./libft
+	$(CC) $(OBJS) $(LIB) -o $(NAME)
 
-%.o: %.c
-	$(CC)  $(CFLAGS) -c $< -I $(INC_DIR) -o $@ 
+bonus: $(OBJSB)
+		@make -C ./libft
+		$(CC) $(OBJSB) $(LIB) -o $(NAME)
 
-$(NAME): $(LIBFT_DIR)$(LIBFT_NAME) $(OBJS)
-	$(CC) -o $(NAME)  $^ -I $(INC_DIR)
-
-$(LIBFT_DIR)$(LIBFT_NAME): $(LIBFT_DIR)
-	make -C $(LIBFT_DIR)
-
-all: $(NAME)
+.c.o:
+			$(CC) -I $(HEADER) -c $< -o $(<:.c=.o)
 
 clean:
-	make -C $(LIBFT_DIR) clean
-	$(RM) $(OBJS)
+	rm -rf $(OBJS)
+	rm -rf $(OBJSB)
 
-fclean: clean
-	make -C $(LIBFT_DIR) fclean
-	$(RM) $(NAME)
+fclean:		clean
+			rm -rf $(NAME) *.o
+			@make fclean -C ./libft
+			rm -rf ./src/mandatory/*.o
+			rm -rf ./src/bonus/*.o
 
-re: clean all
-
-.PHONY: all clean fclean re
-
+re:			fclean all

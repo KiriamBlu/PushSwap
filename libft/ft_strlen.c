@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jporta <jporta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/01 10:17:37 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 17:06:09 by jsanfeli         ###   ########.fr       */
+/*   Created: 2021/09/13 14:37:54 by jporta            #+#    #+#             */
+/*   Updated: 2021/09/13 16:02:59 by jporta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *c)
+size_t	ft_strlen(const char *cadena)
 {
-	unsigned int	i;
+	size_t	a;
 
-	i = 0;
-	while (c[i] != '\0')
-		i++;
-	return (i);
+	a = 0;
+	while (cadena[a])
+		a++;
+	return (a);
 }

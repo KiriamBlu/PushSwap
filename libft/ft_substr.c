@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jporta <jporta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/01 10:17:37 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 17:06:15 by jsanfeli         ###   ########.fr       */
+/*   Created: 2021/09/16 16:20:58 by jporta            #+#    #+#             */
+/*   Updated: 2021/10/27 15:35:39 by jporta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*str;
-	size_t	i;
+	char	*substr;
+	size_t	cont;
+	size_t	a;
 
-	i = 0;
+	a = start;
+	cont = 0;
 	if (!s)
-		return (NULL);
-	if (ft_strlen(s) < start)
-	{
-		str = ft_calloc(1, sizeof(char));
-		return (str);
-	}
-	if (len > ft_strlen(s) - start - 1)
-		len = ft_strlen(s) - start;
-	str = ft_calloc (len + 1, sizeof(char));
-	while (i < len)
-	{
-		str[i] = s[i + start];
-		i++;
-	}
-	return (str);
+		return (0);
+	cont = 0;
+	while (cont < len && s[a++])
+		cont++;
+	substr = (char *)malloc(cont + 1);
+	if (!substr)
+		return (0);
+	a = start;
+	cont = 0;
+	while (cont < len && a < ft_strlen(s))
+		substr[cont++] = s[a++];
+	substr[cont] = '\0';
+	return (substr);
 }

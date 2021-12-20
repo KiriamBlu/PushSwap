@@ -3,74 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jporta <jporta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 17:01:23 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 17:05:45 by jsanfeli         ###   ########.fr       */
+/*   Created: 2021/09/17 14:21:12 by marvin            #+#    #+#             */
+/*   Updated: 2021/09/22 20:07:54 by jporta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	getnumword(char const *s, char limit)
+static int	count_c(char const *str, char c)
 {
 	size_t	i;
+	int		count;
 
+	count = 0;
 	i = 0;
-	if (*s != limit && *s)
+	if (str[0] && str[0] != c)
+		count++;
+	while (i < ft_strlen(str))
+	{
+		if (str[i] == c && str[i + 1] && str[i + 1] != c)
+			count ++;
 		i++;
-	while (*(s + 1))
-	{
-		if (*s == limit && *(s + 1) != limit && *(s + 1) != '\0')
-			i++;
-		s++;
 	}
-	return (i);
+	return (count);
 }
 
-static void	storagewords(char **str, char **auxi, char c, int getword)
+static int	lengt(char const *s, char c, int aux)
 {
-	int		j;
-	char	*aux;
+	int	len;
 
-	j = 0;
-	if (getword != 0 && **str)
+	len = 0;
+	while (s[aux] == c && s[aux])
+		aux++;
+	while (s[aux] != c && s[aux])
 	{
-		while (**str == c)
-		{
-			j++;
-			*str = *str + 1;
-		}
-		aux = ft_strchr(*str, c);
-		*auxi = ft_substr(*str, 0, aux - *str);
-		j = 0;
-		while (j < aux - *str)
-			*str = *str + 1;
+		aux++;
+		len++;
 	}
+	return (len);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	char	**aux;
-	char	*str;
-	int		n_words;
+	int		index;
 	int		i;
+	int		aux;
+	char	**split;
 
 	i = 0;
-	aux = NULL;
-	if (s)
+	if (!s)
+		return (0);
+	split = ft_calloc(sizeof(char *), (count_c(s, c) + 1));
+	if (!split)
+		return (NULL);
+	index = -1;
+	aux = 0;
+	while (++index < count_c(s, c))
 	{
-		str = (char *)s;
-		n_words = getnumword(str, c);
-		aux = ft_calloc(n_words + 1, sizeof(char *));
-		aux[n_words] = NULL;
-		if (!aux)
-			return (0);
-		while (i < n_words)
-		{
-			storagewords(&str, &(aux[i]), c, n_words);
-			i++;
-		}
+		split[index] = malloc((sizeof(char) * lengt(s, c, aux)) + 1);
+		i = 0;
+		while (s[aux] == c && s[aux] != '\0')
+			aux++;
+		while (s[aux] != c && s[aux] != '\0')
+			split[index][i++] = s[aux++];
+		split[index][i] = '\0';
 	}
-	return (aux);
+	return (split);
 }

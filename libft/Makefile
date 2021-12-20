@@ -1,40 +1,46 @@
+CC		= gcc -Wall -Wextra -Werror
+LIB1	= ar -rcs
+RM		= /bin/rm -f
+
 NAME	= libft.a
 
-SRCS	=	ft_bzero.c \
+INCLUDE	= .
+SRCS	=   ft_strlen.c \
+			ft_strnstr.c \
 			ft_memset.c \
-			ft_memcpy.c \
-			ft_calloc.c \
+			ft_memcmp.c \
+			ft_bzero.c \
+			ft_memcpy.c  \
 			ft_strchr.c \
-			ft_strlen.c \
+			ft_strncmp.c \
+			ft_calloc.c \
 			ft_strdup.c \
+			ft_substr.c \
 			ft_strjoin.c \
 			ft_strtrim.c \
-			ft_substr.c \
-			ft_split.c \
+			ft_putchar_fd.c \
+			ft_putstr_fd.c \
+			ft_split.c\
 
 OBJS	= $(SRCS:.c=.o)
 
 
-CFLAGS	= -Wall -Werror -Wextra
+all:		$(NAME) bonus
 
-CC 		= gcc
+$(NAME):	$(OBJS) $(INCLUDE)
+			$(LIB1) $(NAME) $(OBJS)
 
-all: ${NAME}
-
-${NAME}: ${OBJS}
-	${CC} ${CFLAGS} -c ${SRCS}
-	ar rcs ${NAME} ${OBJS}
-
-bonus: ${OBJS_B}
-	${CC} ${CFLAGS} -c ${SRCS_B}
-	ar rcs ${NAME} ${OBJS_B}
+.c.o:
+			$(CC) -I $(INCLUDE) -c $< -o $(<:.c=.o)
 
 clean:
-	rm -f ${OBJS} ${OBJS_B}
+			$(RM) $(OBJS) $(BONUS_O)
 
-fclean: clean
-	rm -f $(NAME)
+fclean:		clean
+			$(RM) $(NAME)
 
-re: fclean all bonus
+re:			fclean all
 
-.PHONY: all bonus clean fclean re
+rebonus:	fclean bonus
+
+.PHONY:		all clean fclean re bonus rebonus
