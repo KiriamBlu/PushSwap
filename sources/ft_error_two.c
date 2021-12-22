@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:12:57 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/14 16:35:48 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:43:54 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ int	ft_check_sign(int argc, const char **str)
 		while (aux[count][i])
 		{
 			k = (int)aux[count][i];
-			if (k == 43 && (ft_is_digit((int)aux[count][i + 1]) == -1))
+			if (k == 43 && (ft_is_digit((int)aux[count][i + 1]) == -1) |
+				(ft_is_digit((int)aux[count][i - 1]) == 1 && k == 43))
 				return (-1);
-			if (k == 45 && (ft_is_digit((int)aux[count][i + 1]) == -1))
+			if (k == 45 && (ft_is_digit((int)aux[count][i + 1]) == -1) |
+				(ft_is_digit((int)aux[count][i - 1]) == 1 && k == 45))
 				return (-1);
 			i++;
 		}

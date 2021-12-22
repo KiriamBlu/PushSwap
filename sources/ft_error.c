@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 12:33:12 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/02 13:25:55 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2021/12/22 13:31:05 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,23 @@ int	ft_get_nothing_else_num(int argc, char const **argv)
 	int		i;
 	int		k;
 	char	**aux;
+	int		count;
 
 	i = 1;
 	aux = (char **)argv;
 	while (i < argc)
 	{
+		count = 0;
 		k = 0;
 		while (aux[i][k])
 		{
+			if (ft_isnum(aux[i][k]) == 1 && aux[i][k] != ' ')
+				count++;
 			if (ft_isnum(aux[i][k++]) != 1)
 				return (-1);
 		}
+		if (count <= 0)
+			return (-1);
 		i++;
 	}
 	return (1);
