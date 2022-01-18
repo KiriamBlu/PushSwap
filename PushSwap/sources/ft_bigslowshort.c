@@ -12,124 +12,253 @@
 
 #include "ps_header.h"
 
-size_t	getb(t_stack *stack, int numa, size_t	count)
+
+static int	decidemiddle(int m)
 {
-	int		*temp;
+	if (m < 0)
+		return (-1);
+	else
+		return (1);
+}
+
+int	find_bestforchunk(int *a, int ntwo, int none, size_t l)
+{
+	int				m;
+	unsigned long	j;
+
+	j = 0;
+	m = 0;
+	while (a[j])
+	{
+		if ((l % 2) == 0)
+		{
+			if (a[j] <= ntwo && a[j] > none && j < (l / 2))
+				m++;
+			else if (a[j] <= ntwo && a[j] > none && j > (l / 2))
+				m--;
+		}
+		else
+		{
+			if (a[j] < ntwo && a[j] > none && j < (l / 2))
+				m++;
+			else if (a[j] < ntwo && a[j] > none && j > (l / 2))
+				m--;
+		}
+		j++;
+	}
+	return (decidemiddle(m));
+}
+
+
+size_t	getlowerchunk(t_stack *stack, int none, int ntwo, int l)
+{
 	size_t	i;
 
-	temp = NULL;
-	if (stack->index_b > 3 && count == 0)
+	i = 0;
+	if(l == -1)
 	{
-		i = 0;
-		temp = getdonechunkforaux(stack->aux, stack->index_b, stack->b[0]);
-		while (i < stack->index_b)
+		while (i < stack->index_a)
 		{
-			if (temp[i] != stack->aux[i])
-				stack->aux[i] = temp[i];
+			if (stack->a[i] <= ntwo && stack->a[i] > none)
+				return (i);
 			i++;
 		}
-		free(temp);
 	}
-	i = 0;
-	while (numa < stack->aux[i] && i < stack->index_b)
-		i++;
-	return (i);
-}
-
-int	geta(t_stack *stack, int pivot, size_t	pru, int s)
-{
-	size_t	position;
-
-	position = 0;
-	if (stack->index_a != 1)
-		position = getlowerpivotforlong(stack, pivot, s, pru);
 	else
-		position = 0;
-	return (position);
-}
-
-static size_t	*resetaux(size_t *l, t_stack *stack)
-{	
-	size_t	m;
-
-	m = 0;
-	l[0] = l[0] + 1;
-	l[1] = 0;
-	while (stack->aux_a[m])
 	{
-		stack->aux_a[m] = 0;
-		m++;
+		i = stack->index_a - 1;
+		while(i > 0)
+		{
+			if (stack->a[i] <= ntwo && stack->a[i] > none)
+				return (i);
+			i--;
+		}
 	}
-	return (l);
+	return (-404);
 }
 
-static size_t	*getpositions(t_stack *stack, int pivot, int s, size_t *a)
+static void reset(t_stack *stack, int big)
 {
-	size_t	i;
-	size_t	*l;
-	size_t	position;
+	size_t i;
 
-	l = ft_calloc(sizeof(size_t), 2);
-	a = malloc(sizeof(size_t) * 2);
-	while (l[1] < stack->index_a - 1)
-	{
-		position = geta(stack, pivot, l[1], s);
-		if (position > 2147483647)
-			break ;
-		stack->aux_a[l[1]] = stack->a[position];
-		a[0] = position;
-		i = getb(stack, stack->a[position], l[1]);
-		a[1] = findereal(stack->aux[i], stack->b, stack->index_b);
-		if (a[1] < ((stack->index_b / 2 - (stack->index_b / 3) - l[0]) - 1)
-			|| a[1] > ((stack->index_b / 2 + (stack->index_b / 3) + l[0]) - 1))
-			break ;
-		if (l[1] == l[0])
-			l = resetaux(l, stack);
-		l[1]++;
-	}
-	free(l);
-	return (a);
+	i = 0;
+	while(stack->a[i] != big)
+		i++;
+	if (i >= (stack->index_a/2))
+		while(stack->a[stack->index_a - 1] != big)
+			revrotate(stack, 'a');
+	else
+		while(stack->a[stack->index_a - 1] != big)
+			rotate(stack, 'a');
 }
 
 void	recursiveshortforlong(t_stack *stack)
 {
 	int *chunk;
-	size_t chunksize;
+	size_t chunksize[2];
 	size_t k;
-	size_t *a;
+	size_t l;
+	int 	max;
 	int		i;
-	int		num[2];
+	int		num;
+	size_t max_num;
 
-	chunksize = -1;
+	chunksize[0] = stack->index_a - 20;
+	chunksize[1] = stack->index_a;
 	chunk = getdonechunk(stack->a, stack->index_a, -1);
-	chunksize = 20;
-	while(stack->index_a != 0)
+	max_num = stack->index_a;
+	l = 0;
+	while(l < max_num)
 	{
-		i = find_bestforpivot(stack->a, chunk[chunksize - 1], stack->index_a);
-		while(stack->index_b <= chunksize)
+		max = 0;
+		k = 0;
+		while(k < 20 && l < max_num)
 		{
-			printf("KK\n");
-			if(stack->index_b >= 1 && stack->index_a > 20)
-			{
-				a = getpositions(stack, chunk[chunksize - 1], i, a);
-				num[0] = stack->a[a[0]];
-				num[1] = stack->b[a[1]];
-				printf("%d\n", num[0]);
-				printf("%d\n", num[1]);
-				sleep(10);
-				dodoble(stack, a[0], a[1]);
-				free(a);
-			}
-			else
-				num[0] = stack->a[getlowerpivot(stack->a, chunk[chunksize - 1], stack->index_a, i)];
-			ft_prepa(stack, num[0]);
-			push_a(stack);
-			printf("LOKO");
-			k = -1;
-			while (++k < stack->index_b)
-			printf("%d_____________", stack->b[k]);
+			i = find_bestforchunk(stack->a, chunk[chunksize[1] - 1], chunk[chunksize[0] - 1], stack->index_a);
+			num = stack->a[getlowerchunk(stack, chunk[chunksize[0] - 1], chunk[chunksize[1] - 1], i)];
+			ft_prepa(stack, num);
+			push_b(stack);
+			k++;
+			l++;
 		}
-		chunksize = chunksize + 20;
+		if(l > 20)
+			reset(stack, chunk[max_num - 1]);
+		finalpart(stack, chunk[chunksize[1] - 1]);
+		chunksize[1] = chunksize[0];
+		if((chunksize[0]) - 20 < 0)
+			chunksize[0] = 0;
+		chunksize[0] = chunksize[0] - 20;
 	}
-	return ;
+	size_t m = -1;
+	while(++m < stack->index_a)
+		printf("%zu: %d\n", m, stack->a[m]);
+	printf("%zu \n", l);
+	sleep(1);
+	free(chunk);
 }
+
+static int	get_numlow(t_stack *stack)
+{
+	t_stack	*aux;
+	size_t	check;
+	size_t	count;
+	size_t	tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_b)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while (tmp < stack->index_b)
+		{
+			if (stack->b[count] <= aux->b[tmp])
+				check++;
+			if (check == stack->index_b)
+				return(stack->b[count]);
+			tmp++;
+		}
+		count++;
+	}
+	return (0);
+}
+
+static int	get_nummax(t_stack *stack)
+{
+	t_stack	*aux;
+	size_t	check;
+	size_t	count;
+	size_t	tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_b)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while (tmp < stack->index_b)
+		{
+			if (stack->b[count] >= aux->b[tmp])
+				check++;
+			if (check == stack->index_b)
+				return(stack->b[count]);
+			tmp++;
+		}
+		count++;
+	}
+	return (0);
+}
+
+static void fight(int i, size_t max, size_t min, t_stack *stack)
+{
+	if (i == 1)
+	{
+		if (min > stack->index_b/2)
+			while(stack->b[0] != get_numlow(stack))
+				revrotate(stack, 'b');
+		else
+			while(stack->b[0] != get_numlow(stack))
+				rotate(stack, 'b');
+	}
+	else
+	{
+		if (max > stack->index_b/2)
+			while(stack->b[0] != get_nummax(stack))
+				revrotate(stack, 'b');
+		else
+			while(stack->b[0] != get_nummax(stack))
+				rotate(stack, 'b');
+	}
+}
+
+static void chooseyourfighter(t_stack *stack)
+{
+	size_t		i;
+	size_t		max;
+	size_t		min;
+
+	i = 0;
+	while(i < stack->index_b)
+	{
+		if(stack->b[i] == get_nummax(stack))
+			max = i;
+		if(stack->b[i] == get_numlow(stack))
+			min = i;
+		i++;
+	}
+	i = 0;
+	if((min > stack->index_b/2 && max < min) 
+		|| (min < stack->index_b/2 && max > min))
+		i = 1;
+	fight(i, max, min, stack);
+}
+
+void finalpart(t_stack *stack, int big)
+{	
+	size_t		i;
+
+	i = 0;
+	while(stack->index_b > 0)
+	{
+		chooseyourfighter(stack);
+		if (stack->b[0] > stack->a[0])
+		{
+			rotate(stack, 'a');
+			push_a(stack);
+		}
+		else
+			push_a(stack);
+	}
+	while(stack->a[0] != big)
+		rotate(stack, 'a');
+	rotate(stack, 'a');
+}
+/*
+size_t m = -1;
+while(++m < stack->index_a)
+	printf("%zu: %d\n", m, stack->a[m]);
+*/

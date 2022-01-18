@@ -87,5 +87,7 @@ size_t	findereal(int aux, int *stack, size_t index);
 void	dodoble(t_stack *stack, size_t position, size_t aux);
 size_t	getlowerpivotforlong(t_stack *stack, int pivot, int m, size_t pru);
 size_t	getlowerpivot(int *a, int pivot, size_t l, int m);
+void	returnlong(t_stack *stack);
+void	finalpart(t_stack *stack, int big);
 
 #endif

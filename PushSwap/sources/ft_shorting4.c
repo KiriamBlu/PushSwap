@@ -34,18 +34,18 @@ void	longshort(t_stack *stack)
 {
 	if(stack->index_a < 250)
 	{
-	firstlong(stack);
-	recursiveshort(stack);
-	threeshort_a(stack);
-	ft_get_nummax(stack);
-	if (find_best(stack->b, stack->max, stack->index_b) == 1)
-		while (stack->b[0] != stack->max)
-			rotate(stack, 'b');
-	else
-		while (stack->b[0] != stack->max)
-			revrotate(stack, 'b');
-	while (stack->index_b != 0)
-		push_a(stack);
+		firstlong(stack);
+		recursiveshort(stack);
+		threeshort_a(stack);
+		ft_get_nummax(stack);
+		if (find_best(stack->b, stack->max, stack->index_b) == 1)
+			while (stack->b[0] != stack->max)
+				rotate(stack, 'b');
+		else
+			while (stack->b[0] != stack->max)
+				revrotate(stack, 'b');
+		while (stack->index_b != 0)
+			push_a(stack);
 	}
 	else
 		recursiveshortforlong(stack);
