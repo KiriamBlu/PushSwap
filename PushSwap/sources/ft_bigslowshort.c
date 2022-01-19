@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:13:26 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/14 16:35:50 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/19 16:50:07 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ int	find_bestforchunk(int *a, int ntwo, int none, size_t l)
 	{
 		if ((l % 2) == 0)
 		{
-			if (a[j] <= ntwo && a[j] > none && j < (l / 2))
+			if ((a[j] <= ntwo) && (a[j] > none) && j < (l / 2))
 				m++;
-			else if (a[j] <= ntwo && a[j] > none && j > (l / 2))
+			else if ((a[j] <= ntwo) && (a[j] > none && j) > (l / 2))
 				m--;
 		}
 		else
 		{
-			if (a[j] < ntwo && a[j] > none && j < (l / 2))
+			if ((a[j] < ntwo) && (a[j] > none) && j < (l / 2))
 				m++;
-			else if (a[j] < ntwo && a[j] > none && j > (l / 2))
+			else if ((a[j] < ntwo) && (a[j] > none) && j > (l / 2))
 				m--;
 		}
 		j++;
@@ -59,7 +59,7 @@ size_t	getlowerchunk(t_stack *stack, int none, int ntwo, int l)
 	{
 		while (i < stack->index_a)
 		{
-			if (stack->a[i] <= ntwo && stack->a[i] > none)
+			if (stack->a[i] < ntwo && stack->a[i] >= none)
 				return (i);
 			i++;
 		}
@@ -69,7 +69,7 @@ size_t	getlowerchunk(t_stack *stack, int none, int ntwo, int l)
 		i = stack->index_a - 1;
 		while(i > 0)
 		{
-			if (stack->a[i] <= ntwo && stack->a[i] > none)
+			if (stack->a[i] < ntwo && stack->a[i] >= none)
 				return (i);
 			i--;
 		}
@@ -96,45 +96,35 @@ void	recursiveshortforlong(t_stack *stack)
 {
 	int *chunk;
 	size_t chunksize[2];
-	size_t k;
 	size_t l;
-	int 	max;
 	int		i;
 	int		num;
 	size_t max_num;
 
-	chunksize[0] = stack->index_a - 20;
-	chunksize[1] = stack->index_a;
-	chunk = getdonechunk(stack->a, stack->index_a, -1);
+	chunksize[0] = 0;
+	chunksize[1] = 20;
+	chunk = getdonechunk(stack->a, stack->index_a, 1);
 	max_num = stack->index_a;
-	l = 0;
-	while(l < max_num)
+	l = stack->index_a/20;
+	while(l > 0)
 	{
-		max = 0;
-		k = 0;
-		while(k < 20 && l < max_num)
+		while(stack->index_b < 20)
 		{
-			i = find_bestforchunk(stack->a, chunk[chunksize[1] - 1], chunk[chunksize[0] - 1], stack->index_a);
-			num = stack->a[getlowerchunk(stack, chunk[chunksize[0] - 1], chunk[chunksize[1] - 1], i)];
+			i = find_bestforchunk(stack->a, chunk[chunksize[0]], chunk[chunksize[1]], stack->index_a);
+			num = stack->a[getlowerchunk(stack, chunk[chunksize[1]], chunk[chunksize[0]], i)];
 			ft_prepa(stack, num);
 			push_b(stack);
-			k++;
-			l++;
 		}
-		if(l > 20)
-			reset(stack, chunk[max_num - 1]);
-		finalpart(stack, chunk[chunksize[1] - 1]);
-		chunksize[1] = chunksize[0];
-		if((chunksize[0]) - 20 < 0)
-			chunksize[0] = 0;
-		chunksize[0] = chunksize[0] - 20;
+		finalpart(stack, chunk[chunksize[1] - 1], l, chunk[max_num - 1]);
+		chunksize[0] = chunksize[1];
+		chunksize[1] = chunksize[1] + 20;
+		l--;
 	}
+	reset(stack, chunk[max_num - 1]); //DESPUES DE QUE LOS NUMEROS FINALES LLEGUEN IMPORTANTE QUITAR
+	free(chunk);
 	size_t m = -1;
 	while(++m < stack->index_a)
 		printf("%zu: %d\n", m, stack->a[m]);
-	printf("%zu \n", l);
-	sleep(1);
-	free(chunk);
 }
 
 static int	get_numlow(t_stack *stack)
@@ -237,11 +227,13 @@ static void chooseyourfighter(t_stack *stack)
 	fight(i, max, min, stack);
 }
 
-void finalpart(t_stack *stack, int big)
+void finalpart(t_stack *stack, int big, size_t l, int chunk)
 {	
 	size_t		i;
 
 	i = 0;
+	if(l <= stack->index_a/20 - 1)
+		reset(stack, chunk);
 	while(stack->index_b > 0)
 	{
 		chooseyourfighter(stack);
