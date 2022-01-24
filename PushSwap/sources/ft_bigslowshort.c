@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:13:26 by jsanfeli          #+#    #+#             */
-/*   Updated: 2022/01/24 17:11:34 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/24 17:59:10 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	find_bestforchunk(int *a, int ntwo, int none, size_t l)
 }
 
 
-size_t	getlowerchunk(t_stack *stack, int none, int ntwo, int l)
+size_t	getlowerchunk(t_stack *stack, int ntwo, int none, int l)
 {
 	size_t	i;
 
@@ -60,9 +60,7 @@ size_t	getlowerchunk(t_stack *stack, int none, int ntwo, int l)
 		while (i < stack->index_a)
 		{
 			if (stack->a[i] <= ntwo && stack->a[i] > none)
-			{
 				return (i);
-			}
 			i++;
 		}
 	}
@@ -102,7 +100,9 @@ void	recursiveshortforlong(t_stack *stack)
 	int		i;
 	int		num;
 	size_t max_num;
+	int k;
 
+	k = 0;
 	chunksize[0] = 0;
 	chunksize[1] = 20;
 	chunk = getdonechunk(stack->a, stack->index_a, 1);
@@ -113,7 +113,7 @@ void	recursiveshortforlong(t_stack *stack)
 		while(stack->index_b < 20)
 		{
 			i = find_bestforchunk(stack->a, chunk[chunksize[0]], chunk[chunksize[1]], stack->index_a);
-			num = stack->a[getlowerchunk(stack, chunk[chunksize[1]], chunk[chunksize[0]], i)];
+			num = stack->a[getlowerchunk(stack, chunk[chunksize[0]], chunk[chunksize[1]], i)];
 			ft_prepa(stack, num);
 			push_b(stack);
 		}
@@ -123,9 +123,8 @@ void	recursiveshortforlong(t_stack *stack)
 		l--;
 	}
 	size_t m = -1;
-		while(++m < stack->index_a)
-			printf("%zu: %d\n", m, stack->a[m]);
-	printf("%zu\n", (stack->index_a - chunksize[0]));
+	while(++m < stack->index_a)
+		printf("%zu: %d\n", m, stack->a[m]);
 	free(chunk);
 }
 
