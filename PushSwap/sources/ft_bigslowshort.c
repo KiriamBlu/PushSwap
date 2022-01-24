@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:13:26 by jsanfeli          #+#    #+#             */
-/*   Updated: 2022/01/19 16:50:07 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/24 17:11:34 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static int	decidemiddle(int m)
 {
 	if (m < 0)
-		return (-1);
-	else
 		return (1);
+	else
+		return (-1);
 }
 
 int	find_bestforchunk(int *a, int ntwo, int none, size_t l)
@@ -59,8 +59,10 @@ size_t	getlowerchunk(t_stack *stack, int none, int ntwo, int l)
 	{
 		while (i < stack->index_a)
 		{
-			if (stack->a[i] < ntwo && stack->a[i] >= none)
+			if (stack->a[i] <= ntwo && stack->a[i] > none)
+			{
 				return (i);
+			}
 			i++;
 		}
 	}
@@ -69,7 +71,7 @@ size_t	getlowerchunk(t_stack *stack, int none, int ntwo, int l)
 		i = stack->index_a - 1;
 		while(i > 0)
 		{
-			if (stack->a[i] < ntwo && stack->a[i] >= none)
+			if (stack->a[i] <= ntwo && stack->a[i] > none)
 				return (i);
 			i--;
 		}
@@ -96,7 +98,7 @@ void	recursiveshortforlong(t_stack *stack)
 {
 	int *chunk;
 	size_t chunksize[2];
-	size_t l;
+	int 	l;
 	int		i;
 	int		num;
 	size_t max_num;
@@ -115,16 +117,16 @@ void	recursiveshortforlong(t_stack *stack)
 			ft_prepa(stack, num);
 			push_b(stack);
 		}
-		finalpart(stack, chunk[chunksize[1] - 1], l, chunk[max_num - 1]);
+		finalpart(stack, chunk[chunksize[1]], l, chunk[0]);
 		chunksize[0] = chunksize[1];
 		chunksize[1] = chunksize[1] + 20;
 		l--;
 	}
-	reset(stack, chunk[max_num - 1]); //DESPUES DE QUE LOS NUMEROS FINALES LLEGUEN IMPORTANTE QUITAR
-	free(chunk);
 	size_t m = -1;
-	while(++m < stack->index_a)
-		printf("%zu: %d\n", m, stack->a[m]);
+		while(++m < stack->index_a)
+			printf("%zu: %d\n", m, stack->a[m]);
+	printf("%zu\n", (stack->index_a - chunksize[0]));
+	free(chunk);
 }
 
 static int	get_numlow(t_stack *stack)

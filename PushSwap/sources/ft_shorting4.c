@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 16:35:37 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 15:56:53 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:00:43 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	longshort(t_stack *stack)
 			push_a(stack);
 	}
 	else
+	{
 		recursiveshortforlong(stack);
+	}
 }
 
 static size_t	geti(int numa, int *aux, size_t stack)
