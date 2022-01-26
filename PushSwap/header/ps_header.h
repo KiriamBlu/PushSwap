@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:30:15 by jsanfeli          #+#    #+#             */
-/*   Updated: 2022/01/20 15:22:58 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:48:59 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ void	dodoble(t_stack *stack, size_t position, size_t aux);
 size_t	getlowerpivotforlong(t_stack *stack, int pivot, int m, size_t pru);
 size_t	getlowerpivot(int *a, int pivot, size_t l, int m);
 void	returnlong(t_stack *stack);
-void	finalpart(t_stack *stack, int big, size_t l, int chunk);
+void	finalpart(t_stack *stack, int big);
 
 #endif

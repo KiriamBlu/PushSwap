@@ -6,47 +6,47 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:13:26 by jsanfeli          #+#    #+#             */
-/*   Updated: 2022/01/24 17:59:10 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/26 16:01:17 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps_header.h"
 
 
-static int	decidemiddle(int m)
+static int	decidemiddle(int m, int s)
 {
-	if (m < 0)
+	if (m < 0 && s != 0)
 		return (1);
-	else
+	else if (m >= 0 && s != 0)
 		return (-1);
+	else
+		return(0);
 }
 
 int	find_bestforchunk(int *a, int ntwo, int none, size_t l)
 {
 	int				m;
 	unsigned long	j;
+	int				s;
 
 	j = 0;
+	s = 0;
 	m = 0;
 	while (a[j])
 	{
-		if ((l % 2) == 0)
+		if ((a[j] <= ntwo) && (a[j] > none) && j < (l / 2))
 		{
-			if ((a[j] <= ntwo) && (a[j] > none) && j < (l / 2))
-				m++;
-			else if ((a[j] <= ntwo) && (a[j] > none && j) > (l / 2))
-				m--;
+			s++;
+			m++;
 		}
-		else
+		else if ((a[j] <= ntwo) && (a[j] > none && j) >= (l / 2))
 		{
-			if ((a[j] < ntwo) && (a[j] > none) && j < (l / 2))
-				m++;
-			else if ((a[j] < ntwo) && (a[j] > none) && j > (l / 2))
-				m--;
+			s++;
+			m--;
 		}
 		j++;
 	}
-	return (decidemiddle(m));
+	return (decidemiddle(m, s));
 }
 
 
@@ -96,32 +96,34 @@ void	recursiveshortforlong(t_stack *stack)
 {
 	int *chunk;
 	size_t chunksize[2];
-	int 	l;
 	int		i;
 	int		num;
 	size_t max_num;
-	int k;
 
-	k = 0;
 	chunksize[0] = 0;
 	chunksize[1] = 20;
 	chunk = getdonechunk(stack->a, stack->index_a, 1);
 	max_num = stack->index_a;
-	l = stack->index_a/20;
-	while(l > 0)
+	while(chunksize[1] != max_num)
 	{
-		while(stack->index_b < 20)
+		while(stack->index_b < 20 
+			| find_bestforchunk(stack->a, chunk[chunksize[0]], chunk[chunksize[1]], stack->index_a) != 0)
 		{
 			i = find_bestforchunk(stack->a, chunk[chunksize[0]], chunk[chunksize[1]], stack->index_a);
 			num = stack->a[getlowerchunk(stack, chunk[chunksize[0]], chunk[chunksize[1]], i)];
 			ft_prepa(stack, num);
 			push_b(stack);
 		}
-		finalpart(stack, chunk[chunksize[1]], l, chunk[0]);
+		if(chunksize[0] != 0)
+			reset(stack, chunk[0]);
+		finalpart(stack, chunk[chunksize[1]]);
 		chunksize[0] = chunksize[1];
 		chunksize[1] = chunksize[1] + 20;
-		l--;
+		if (chunksize[1] > max_num)
+			chunksize[1] = max_num;
+
 	}
+	reset(stack, chunk[0]);
 	size_t m = -1;
 	while(++m < stack->index_a)
 		printf("%zu: %d\n", m, stack->a[m]);
@@ -188,7 +190,7 @@ static void fight(int i, size_t max, size_t min, t_stack *stack)
 {
 	if (i == 1)
 	{
-		if (min > stack->index_b/2)
+		if (min > stack->index_b / 2)
 			while(stack->b[0] != get_numlow(stack))
 				revrotate(stack, 'b');
 		else
@@ -197,7 +199,7 @@ static void fight(int i, size_t max, size_t min, t_stack *stack)
 	}
 	else
 	{
-		if (max > stack->index_b/2)
+		if (max > stack->index_b / 2)
 			while(stack->b[0] != get_nummax(stack))
 				revrotate(stack, 'b');
 		else
@@ -228,13 +230,11 @@ static void chooseyourfighter(t_stack *stack)
 	fight(i, max, min, stack);
 }
 
-void finalpart(t_stack *stack, int big, size_t l, int chunk)
+void finalpart(t_stack *stack, int big)
 {	
 	size_t		i;
 
 	i = 0;
-	if(l <= stack->index_a/20 - 1)
-		reset(stack, chunk);
 	while(stack->index_b > 0)
 	{
 		chooseyourfighter(stack);
