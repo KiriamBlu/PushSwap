@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:30:15 by jsanfeli          #+#    #+#             */
-/*   Updated: 2022/01/31 18:33:35 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/31 19:22:00 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,10 @@ void	longshort(t_stack *stack);
 void	longlongshort(t_stack *stack);
 void	recursiveshortforlong(t_stack *stack, size_t size);
 void	ft_get_numlow(t_stack *stack);
+void	makechunk(t_stack *stack, size_t chunk, size_t size);
+size_t	getnum(int *stack, size_t index, int num);
+void	prepb(t_stack *stack, size_t pos);
+void	prepa(t_stack *stack, size_t pos);
+size_t	getpos(int *stack, size_t index, int num);
 
 #endif
