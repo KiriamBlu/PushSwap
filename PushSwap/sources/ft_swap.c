@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 09:18:13 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/06 17:09:29 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:32:59 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,45 +39,4 @@ void	swap(t_stack *stack, int c)
 		stack->b[0] = stack->b[1];
 		stack->b[1] = i;
 	}
-}
-
-int	*getdonechunkforaux(int *stack, size_t chunksize, int new_b)
-{
-	size_t	i;
-	size_t	j;
-	int		*aux;
-
-	i = 0;
-	aux = ft_calloc(sizeof(int), chunksize);
-	while (i < chunksize - 1)
-	{
-		aux[i] = stack[i];
-		i++;
-	}
-	i = 0;
-	while (i < chunksize - 1 && aux[i] > new_b)
-		i++;
-	j = chunksize;
-	while (j > i)
-	{
-		aux[j] = aux[j - 1];
-		j--;
-	}
-	aux[i] = new_b;
-	return (aux);
-}
-
-int	getpositionpivot(size_t chunksize, int *stack)
-{
-	int	pivot;
-	int	*chunk;
-
-	pivot = 0;
-	chunk = getdonechunk(stack, chunksize, 0);
-	if (chunksize % 2 == 0)
-		pivot = chunk[chunksize / 2 - 1];
-	else
-		pivot = chunk[(chunksize / 2)];
-	free(chunk);
-	return (pivot);
 }

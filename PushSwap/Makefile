@@ -11,10 +11,6 @@ SRCS =  ./sources/push_swap.c \
 		./sources/ft_revrotate.c \
 		./sources/ft_shorting.c \
 		./sources/ft_shorting2.c \
-		./sources/ft_shorting3.c \
-		./sources/ft_algowheel.c \
-		./sources/ft_shortingforlong.c \
-		./sources/ft_getargsready.c \
 		./sources/ft_shorting4.c \
 		./sources/ft_bigslowshort.c
 
@@ -26,7 +22,7 @@ EXE_DIR = ./
 
 CC := cc
 GCC := gcc
-CFLAGS := -Wall -Wextra #-Werror 
+CFLAGS := -Wall -Wextra -Werror 
 MV := mv -f
 RM := rm -f
 

@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:13:26 by jsanfeli          #+#    #+#             */
-/*   Updated: 2022/01/31 17:38:07 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:26:51 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,12 @@ size_t	getnum(int *stack, size_t index, int num)
 }
 
 
-static void makechunk(t_stack *stack, size_t chunk)
+static void makechunk(t_stack *stack, size_t chunk, size_t size)
 {
-	size_t		i;
+	size_t	i;
 
 	i = 0;
-	while(i < 40 && stack->index_a != 0)
+	while(i < size && stack->index_a != 0)
 	{
 		prepa(stack, getpos(stack->a, stack->index_a, chunk));
 		push_b(stack);
@@ -137,16 +137,16 @@ static void makechunk(t_stack *stack, size_t chunk)
 	}
 }
 
-void	recursiveshortforlong(t_stack *stack)
+void	recursiveshortforlong(t_stack *stack, size_t size)
 {
 	size_t chunksize;
 
-	chunksize = 40;
+	chunksize = size;
 	get_numsdone(stack->a, (int)stack->index_a);
 	while(stack->index_a != 0)
 	{
-		makechunk(stack ,chunksize);
-		chunksize += 40;
+		makechunk(stack ,chunksize, size);
+		chunksize += size;
 	}
 	while(stack->index_b != 0)
 	{

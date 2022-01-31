@@ -6,7 +6,7 @@
 /*   By: jsanfeli <jsanfeli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:12:57 by jsanfeli          #+#    #+#             */
-/*   Updated: 2021/12/22 12:43:54 by jsanfeli         ###   ########.fr       */
+/*   Updated: 2022/01/31 18:32:31 by jsanfeli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,32 @@ void	checkls(char ***ls, int i)
 		write(1, "Error\n", 6);
 		exit (0);
 	}
+}
+
+void	ft_get_numlow(t_stack *stack)
+{
+	t_stack	*aux;
+	size_t	check;
+	size_t	count;
+	size_t	tmp;
+
+	count = 0;
+	aux = NULL;
+	aux = stack;
+	while (count < stack->index_a)
+	{
+		tmp = 0;
+		aux = stack;
+		check = 0;
+		while (tmp < stack->index_a)
+		{
+			if (stack->a[count] <= aux->a[tmp])
+				check++;
+			if (check == stack->index_a)
+				stack->low = stack->a[count];
+			tmp++;
+		}
+		count++;
+	}
+	return ;
 }
